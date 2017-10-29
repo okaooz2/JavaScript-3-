@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>弹球盒子2</title>
+	<style>
+		#ball_box {
+			display: block;
+			width: 900px;
+			height: 550px;
+			border: 3px solid black;
+			margin: 50px auto;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value="添加小球" onclick="addBall()" />
+	<div id="ball_box"></div>
+	
+
+
+	<script>
+		//盒子的构造函数
+		function Box() {
+			this.width;
+			this.height;
+		}
+
+		//球模型的构造函数
+		function BouncyBall() {
+			this.radius = 0;
+			this.x_position = 0;		//这里位置是以元素左上角为目标点的
+			this.y_position = 0;
+			this.ball_element = document.createElement("div");
+
+			this.x_velocity = 0;
+			this.y_velocity = 0;
+			this.x_wall_right = 0;
+			this.y_wall_bottom = 0;
+		}
+		BouncyBall.prototype = {
+			box_properties : new Box(),
+
+			setBall : function(radius, x_position, y_position, father_element, color_name) {
+				//初始化对象的属性
+				this.radius = radius;
+				this.x_position = x_position;
+				this.y_position = y_position;
+
+				//处理该球元素，并把它添加到html文档中
+				father_element.appendChild(this.ball_element);
+				this.ball_element.style.position = "absolute";
+				this.ball_element.style.border = this.radius + "px solid " + color_name;
+				this.ball_element.style.borderRadius = "50%";
+				this.ball_element.style.left = (this.x_position) + "px";
+				this.ball_element.style.top = (this.y_position) + "px";
+			},
+			setOtherProperties : function(father_element, box_width, box_height, velocity, angle) {
+				//初始化盒子的属性
+				if(typeof this.box_properties.width === "undefined") {
+					this.box_properties.width = box_width;
+					this.box_properties.height = box_height;
+
+					father_element.style.display = "block";
+					father_element.style.width = box_width + "px";
+					father_element.style.height = box_height + "px";
+				}
+
+				//初始化球的运动属性
+				this.x_velocity = velocity * Math.cos(angle/180 * Math.PI);
+				this.y_velocity = velocity * Math.sin(angle/180 * Math.PI);
+				this.x_wall_right = box_width - 2*this.radius;
+				this.y_wall_bottom = box_height -2*this.radius;
+			},
+			letItMoving : function() {
+				var that = this;
+
+				function _letItMoving() {
+					return function() {
+						if(that.x_position <= 0 || that.x_position >= that.x_wall_right) {
+							that.x_velocity = -that.x_velocity;
+						}
+						if(that.y_position <= 0 || that.y_position >= that.y_wall_bottom) {
+							that.y_velocity = -that.y_velocity;
+						}
+						that.x_position += that.x_velocity;
+						that.y_position += that.y_velocity;
+
+						that.ball_element.style.left = that.x_position + "px";
+						that.ball_element.style.top = that.y_position + "px";
+
+						window.setTimeout(_letItMoving(), 1);
+					};
+				}
+				// window.setInterval(_letItMoving(), 1);
+				window.setTimeout(_letItMoving(), 1);
+			}
+		}
+		
+
+		// addLoadEvent(doSomething);
+		// function doSomething() {
+		// 	// var ball_box = document.getElementById("ball_box");
+
+		// 	// var ball_1 = new BouncyBall();
+		// 	// ball_1.setBall(50, 100, 100, ball_box, "red");
+		// 	// ball_1.setOtherProperties(ball_box, 900, 550, 3, -30);
+		// 	// ball_1.letItMoving();
+
+		// 	// var ball_2 = new BouncyBall();
+		// 	// ball_2.setBall(15, 500, 500, ball_box, "blue");
+		// 	// ball_2.setOtherProperties(ball_box, 900, 550, 3, 100);		//这里设置的盒子宽度必须与上面一直
+		// 	// ball_2.letItMoving();
+		// }
+
+		function addBall() {
+			var ball_box = document.getElementById("ball_box");
+			var data = prompt("请输入小球的特性，中间用空格隔开。顺序为半径，x坐标（0~900以下），y坐标（0~550以下）颜色，运动速度（建议1~5），初速度角度。以下为例子：", "15 100 100 red 3 150");
+
+			data = data.split(" ");
+
+			// var ball_1 = new BouncyBall();
+			// ball_1.setBall(50, 100, 100, ball_box, "red");
+			// ball_1.setOtherProperties(ball_box, 900, 550, 3, -30);
+			// ball_1.letItMoving();
+			var ball = new BouncyBall();
+			ball.setBall(parseInt(data[0]), parseInt(data[1]), parseInt(data[2]), ball_box, data[3]);
+			ball.setOtherProperties(ball_box, 900, 550, parseInt(data[4]), parseInt(data[5]));
+			ball.letItMoving();
+		}
+	</script>
+</body>
+</html>

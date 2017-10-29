@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>通过DOM创建表格</title>
+</head>
+<body>
+	<table border="1" width="200px">
+		<caption>这是html创建的表格</caption>
+		<tbody>
+			<tr>
+				<td>1, 1</td>
+				<td>1, 2</td>
+			</tr>
+			<tr>
+				<td>2, 1</td>
+				<td>2, 2</td>
+			</tr>
+			<tr>
+				<td>3, 1</td>
+				<td>3, 2</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<input type="button" value="显示乘法口诀表" onclick="numberTable(25, 30)" />
+
+
+
+	<script src="js/addLoadEvent.js"></script>
+
+	<script>
+		addLoadEvent(createTable);
+		function createTable() {
+			//创建table
+			var table = document.createElement("table");
+			table.border = 1;
+			table.width = "200px";
+			document.body.appendChild(table);
+
+			//创建表头thead
+			table.createCaption().appendChild(document.createTextNode("这是JS创建的表格"));
+
+			//创建表格主体
+			var body = document.createElement("tbody");
+			table.appendChild(body);
+
+			//为表格主体添加内容
+			body.insertRow(0);		//0行
+			body.rows[0].insertCell(0);
+			body.rows[0].cells[0].appendChild(document.createTextNode("1, 1"));
+			body.rows[0].insertCell(1);
+			body.rows[0].cells[1].appendChild(document.createTextNode("1, 2"));
+
+			body.insertRow(1);		//1行
+			body.rows[1].insertCell(0);
+			body.rows[1].cells[0].appendChild(document.createTextNode("2, 1"));
+			body.rows[1].insertCell(1);
+			body.rows[1].cells[1].appendChild(document.createTextNode("2, 2"));
+
+			body.insertRow(2);		//0行
+			body.rows[2].insertCell(0);
+			body.rows[2].cells[0].appendChild(document.createTextNode("3, 1"));
+			body.rows[2].insertCell(1);
+			body.rows[2].cells[1].appendChild(document.createTextNode("3, 2"));
+		}
+
+		function numberTable(x_num, y_num) {
+			//创建table
+			var table = document.createElement("table");
+			table.border = 1;
+			table.width = 40*x_num + "px";
+			document.body.appendChild(table);
+
+			//创建表头thead
+			table.createCaption().appendChild(document.createTextNode("算术表"));
+
+			//创建表格主体
+			var body = document.createElement("tbody");
+			table.appendChild(body);
+
+			var i = 0, j = 0;
+			body.insertRow(0).style.backgroundColor = "yellow";
+			// body.rows[0].style.backgroundColor = "yellow";
+			body.rows[0].insertCell(0);
+			for(i=1; i<x_num+1; ++i) {		//0行显示乘数
+				body.rows[0].insertCell(i);
+				body.rows[0].cells[i].appendChild(document.createTextNode(i));
+			}
+			for(i=1; i<y_num+1; ++i) {
+				body.insertRow(i);
+				body.rows[i].insertCell(0).style.backgroundColor = "yellow";			//0列显示乘数
+				body.rows[i].cells[0].appendChild(document.createTextNode(i));
+				// body.rows[i].cells[0].style.backgroundColor = "yellow";
+				for(j=1; j<x_num+1; ++j) {
+					body.rows[i].insertCell(j).style.backgroundColor = "#D3D3D3";
+					body.rows[i].cells[j].appendChild(document.createTextNode(i*j));
+					// body.rows[i].cells[j].style.backgroundColor = "#D3D3D3";
+				}
+			}
+		}
+	</script>
+</body>
+</html>

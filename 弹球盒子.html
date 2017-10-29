@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>弹球盒子</title>
+	<style>
+		#ball_box {
+			display: block;
+			width: 900px;
+			height: 500px;
+			border: 3px solid black;
+			margin: 50px auto;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<div id="ball_box"></div>
+
+
+
+	<script>
+		//弹力球的对象模型
+		function BouncyBall(radius) {
+			this.radius = radius;
+			this.ball_element = document.createElement("div");
+			this.x_position = 0;
+			this.y_position = 0;
+
+			this.properties = {
+				x_velocity : 0,
+				y_velocity : 0,
+				x_wall_left : 0,
+				x_wall_right : 0,
+				y_wall_top : 0,
+				y_wall_bottom : 0
+			}
+			
+		}
+		BouncyBall.prototype.initialize = function(father_element, x_position, y_position, color_name) {
+			this.x_position = x_position;
+			this.y_position = y_position;
+
+			father_element.appendChild(this.ball_element);
+
+			this.ball_element.style.position = "absolute";
+			this.ball_element.style.left = x_position + "px";
+			this.ball_element.style.top = y_position + "px";
+			this.ball_element.style.border = "solid " + color_name + " " + this.radius + "px";
+			this.ball_element.style.borderRadius = "50%";
+		}
+		BouncyBall.prototype.setPropertise = function(velocity, angle, box_width, box_height) {
+			this.properties.x_velocity = velocity * Math.cos(angle/180 * Math.PI);
+			this.properties.y_velocity = velocity * Math.sin(angle/180 * Math.PI);
+			this.properties.x_wall_left = this.radius;
+			this.properties.x_wall_right = box_width - this.radius;
+			this.properties.y_wall_top = this.radius;
+			this.properties.y_wall_bottom = box_height - this.radius;
+
+			this.properties.x_velocity = Math.floor(this.properties.x_velocity);
+			this.properties.y_velocity = Math.floor(this.properties.y_velocity);
+		}
+		BouncyBall.prototype.move = function() {
+			if(this.x_position <= this.properties.x_wall_left || this.x_position >= this.properties.x_wall_right) {
+				this.properties.x_velocity = -this.properties.x_velocity;
+			}
+			if(this.y_position <= this.properties.y_wall_top || this.y_position >= this.properties.y_wall_bottom) {
+				this.properties.y_velocity = -this.properties.y_velocity;
+			}
+			this.x_position += this.properties.x_velocity;
+			this.y_position += this.properties.y_velocity;
+			// ++this.x_position;
+			// ++this.y_position;
+
+			this.ball_element.style.left = this.x_position + "px";
+			this.ball_element.style.top = this.y_position + "px";
+			alert(this.properties.x_velocity);
+		}
+		
+		var ball_box = document.getElementById("ball_box");
+
+		var ball_1 = new BouncyBall(10);
+		ball_1.initialize(ball_box, 100, 100, "red");
+		// ball_1.move(10, 0, parseInt(ball_box.style.width), parseInt(ball_box.style.height));
+
+		var ball_2 = new BouncyBall(50);
+		ball_2.initialize(ball_box, 250, 250, "blue");
+		ball_2.setPropertise(10, 0, parseInt(ball_box.style.width), parseInt(ball_box.style.height));
+		window.setInterval(ball_2.move(), 1000);
+
+
+		document.write(Math.sin(90/180*Math.PI) + "<br />");
+	</script>
+</body>
+</html>

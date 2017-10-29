@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>弹性方块2</title>
+	<style>
+		div#square_box {
+			display: block;
+			width: 900px;
+			height: 550px;
+			border: 3px solid black;
+			margin: 50px auto;
+			position: relative;
+			background-color: #F5F5F5;
+		}
+		input[name=square_emission] {
+			position: absolute;
+			margin: 2px -4px;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
+		input[name=square_emission]:nth-child(1){
+			left: 0;
+			bottom: 100%;
+		}
+		input[name=square_emission]:nth-child(2){
+			right: 0;
+			bottom: 100%;
+		}input[name=square_emission]:nth-child(3){
+			right: 0;
+			top: 100%;
+		}
+		input[name=square_emission]:nth-child(4){
+			left: 0;
+			top: 100%;
+		}
+		p#square_counter {
+			text-align: center;
+			font-size: 3em;
+		}
+		p#square_counter span {
+			color: white;
+			font-weight: bold;
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<p id="square_counter">方块个数为：<span id="counter">0</span></p>
+	<div id="square_box">
+		<input type="button" name="square_emission" value="发射" onclick="addSquare('left-top', 'square_box', 'counter')"" />
+		<input type="button" name="square_emission" value="发射" onclick="addSquare('right-top', 'square_box', 'counter')" />
+		<input type="button" name="square_emission" value="发射" onclick="addSquare('right-bottom', 'square_box', 'counter')" />
+		<input type="button" name="square_emission" value="发射" onclick="addSquare('left-bottom', 'square_box', 'counter')" />
+	</div>
+	
+
+
+	<script>
+		//盒子的构造函数
+		function Box() {
+			this.width;
+			this.height;
+		}
+
+		//球模型的构造函数
+		function BouncySquare() {
+			this.x_position = 0;		//这里位置是以元素左上角为目标点的
+			this.y_position = 0;
+			this.square_element = document.createElement("div");
+
+			this.x_wall_right = 0;
+			this.y_wall_bottom = 0;
+			this.flag_x = false;
+			this.flag_y = false;
+
+		}
+		BouncySquare.prototype = {
+			side : 0,
+			box_properties : new Box(),
+
+			setSquare : function(side, x_position, y_position, father_element) {
+				//初始化对象的属性
+				this.side = side;
+				this.x_position = x_position;
+				this.y_position = y_position;
+
+				//处理该球元素，并把它添加到html文档中
+				father_element.appendChild(this.square_element);
+				this.square_element.style.position = "absolute";
+				this.square_element.style.width = this.side + "px";
+				this.square_element.style.height = this.side + "px";
+				this.square_element.style.border = "6px solid red";		//这里本应为5px, 但为了视觉效果现改为6px, 后面计算仍用5px计算
+				this.square_element.style.backgroundColor = "yellow";
+			},
+			setOtherProperties : function(father_element, box_width, box_height) {
+				//初始化盒子的属性
+				if(typeof this.box_properties.width === "undefined") {
+					this.box_properties.width = box_width;
+					this.box_properties.height = box_height;
+
+					father_element.style.display = "block";
+					father_element.style.width = box_width + "px";
+					father_element.style.height = box_height + "px";
+				}
+
+				//初始化球的运动属性
+				this.x_wall_right = box_width - this.side -5*2;		//5为边界宽度
+				this.y_wall_bottom = box_height -this.side -5*2;
+			},
+			letItMoving : function() {
+				var that = this;
+				// var temp_flag_x = false, temp_flag_y = false;
+
+				function _letItMoving() {
+					// temp_flag_x = that.flag_x;
+					// temp_flag_y = that.flag_y;
+					return function() {
+						if(that.x_position <= 0) {
+							that.flag_x = true;
+						}
+						else if(that.x_position >= that.x_wall_right) {
+							that.flag_x = false;
+						}
+						if(that.y_position <= 0) {
+							that.flag_y = true;
+						}
+						else if(that.y_position >= that.y_wall_bottom) {
+							that.flag_y = false;
+						}
+
+						that.square_element.style.left = (that.flag_x ? (++that.x_position):(--that.x_position)) + "px";
+						that.square_element.style.top = (that.flag_y ? (++that.y_position):(--that.y_position)) + "px";
+						
+						window.setTimeout(_letItMoving(), 1);
+					};
+				}
+				window.setTimeout(_letItMoving(), 1);
+			}
+		}
+
+		function BounceProcess() {
+			this.elements = new Array();
+		}
+		BounceProcess.prototype = {
+			addObject : function(element) {
+				this.elements.push(element);
+			},
+			bounce : function() {
+				for(var i=0, len=this.elements.length; i<len; ++i) {
+					for(var j=i+1; j<len; ++j) {
+						var element_1 = this.elements[i];
+						var element_2 = this.elements[j];
+						var _x = element_2.x_position - element_1.x_position;
+						var _y = element_2.y_position - element_1.y_position;
+						var detail_x = Math.abs(_x);
+						var detail_y = Math.abs(_y);
+
+						var side = element_1.side + 2*5;
+						if(detail_x <= side && detail_y <= side) {
+							if(detail_x < detail_y) {		//y方向发生碰撞
+								var _y2 = side - detail_y + 1;
+								if(_y > 0) {element_2.y_position += _y2;}
+								else {element_1.y_position += _y2;}
+								element_1.flag_y = !element_1.flag_y;
+								element_2.flag_y = !element_2.flag_y;
+							}
+							else if(detail_x > detail_y) {		//x方向发生碰撞
+								var _x2 = side - detail_x + 1;
+								if(_x > 0) {element_2.x_position += _x2;}
+								else {element_1.x_position += _x2;}
+								element_1.flag_x = !element_1.flag_x;
+								element_2.flag_x = !element_2.flag_x;
+							}
+							else {		//尖角发生碰撞
+								element_1.flag_y = !element_1.flag_y;
+								element_2.flag_y = !element_2.flag_y;
+								element_1.flag_x = !element_1.flag_x;
+								element_2.flag_x = !element_2.flag_x;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		function addSquare(text, box, counter) {
+			var square_box = document.getElementById(box);
+			var square = new BouncySquare();
+			if(text === "left-top") {square.setSquare(20, 0, 0, square_box);}
+			if(text === "right-top") {square.setSquare(20, box_size_width-30, 0, square_box);}
+			if(text === "right-bottom") {square.setSquare(20, box_size_width-30, box_size_height-30, square_box);}
+			if(text === "left-bottom") {square.setSquare(20, 0, box_size_height-30, square_box);}
+
+			square.setOtherProperties(square_box, box_size_width, box_size_height);
+			square.letItMoving();
+
+			bounce.addObject(square);
+			document.getElementById(counter).firstChild.nodeValue = ++square_counter;
+		}
+
+		var bounce = new BounceProcess();
+		var box_size = prompt("请输入盒子的尺（中间用空格隔开）：", "900 550");
+		var square_counter = 0;
+
+		if(box_size !== null) {
+			box_size = box_size.split(/ +/);
+			var box_size_width = parseInt(box_size[0]);
+			var box_size_height = parseInt(box_size[1]);
+		}
+		else {
+			var box_size_width = 900;
+			var box_size_height = 550;
+		}
+
+		(function(id_text) {
+			var box = document.getElementById(id_text);
+			box.style.width = box_size_width + "px";
+			box.style.height = box_size_height + "px";
+		})("square_box");
+
+		function doSomething() {
+			return function() {
+				bounce.bounce();
+				setTimeout(doSomething(), 1);
+			}
+		}
+		setTimeout(doSomething(), 1);
+	</script>
+</body>
+</html>

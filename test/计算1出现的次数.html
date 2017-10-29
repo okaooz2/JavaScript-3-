@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>计算1出现的次数</title>
+</head>
+<body>
+	
+
+	<script type="text/javascript">
+		var start_time = +new Date();
+
+		count(100, 1300);
+		function count(initial_number, final_number) {
+			var counter = 0;
+			for(var i=initial_number; i<=final_number; ++i) {
+				var num_string = i.toString(10);
+				for(var j=0; j<num_string.length; ++j) {
+					if(num_string[j] === "1") {
+						++counter;
+					}
+				}
+			}
+			document.write(counter);
+			// alert(counter);
+		}
+
+		var stop_time = +new Date();
+		document.write("<br /><br /><br />");
+		document.write("运行用时：" + (stop_time - start_time) + "毫秒");
+	</script>
+</body>
+</html>

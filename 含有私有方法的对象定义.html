@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>含有私有方法的对象定义</title>
+</head>
+<body>
+	
+
+
+	<script type="text/javascript">
+		//定义一个“人”对象的方案
+		function Person(name, age) {
+			this.name = name;
+			this.age = age;
+
+			this.sayName = function() {
+				// alert(this.name);
+				document.write(this.name + "<br />");
+			};
+		}
+		Person.prototype.sayHellow = function() {
+			// alert("hellow!!");
+			document.write("hellow!!" + this.age + "<br />");
+		};
+
+		//定义一个“班级”对象的方案
+		//这种方法的缺点是必须在私有变量所在的作用域中添加可以调用他的属性，以下面的对象方案做例子：getCount()函数和addPeople()函数必须在构造函数内定义，而这种情况下这两函数若能共享就更好了
+		function Class() {
+			var all_people = Array();		//所有学生和老师的信息是不可直接获取的（处于保密原因）
+
+			this.getCount = function() {
+				return all_people.length;
+			};
+			this.addPeople = function(person) {
+				if(person instanceof Person) {
+					all_people.push(person);
+				}
+				else {
+					alert("接口输入对象类型有误");
+				}
+			}
+		}
+		// Class.prototype = {			//error, 调用他的对象（this）中并没有all_people属性
+		// 	getCount : function() {
+		// 		return this.all_people.length;
+		// 	},
+		// 	addPeople : function(person) {
+		// 		if(person instanceof Person) {
+		// 			this.all_people.push(person);
+		// 		}
+		// 		else {
+		// 			alert("请输入正确的学生信息");
+		// 		}
+		// 	}
+		// }
+
+		var person1 = new Person("小A", 20);
+		person1.sayName();
+		person1.sayHellow();
+		document.write("<br />");
+
+		var person2 = new Person("小B", 24);
+		person2.sayName();
+		person2.sayHellow();
+		document.write("<br />");
+
+		var class1 = new Class();
+		document.write(class1.getCount() + "<br />");
+		class1.addPeople(person1);
+		class1.addPeople(person2);
+		document.write(class1.getCount() + "<br />");
+
+	</script>
+</body>
+</html>

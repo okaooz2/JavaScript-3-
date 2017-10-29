@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>弹性方块</title>
+	<style>
+		#square_box {
+			display: block;
+			width: 900px;
+			height: 550px;
+			border: 3px solid black;
+			margin: 50px auto;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<input type="button" value="添加方块" onclick="addSquare()" />
+	<div id="square_box"></div>
+	
+
+
+	<script>
+		//盒子的构造函数
+		function Box() {
+			this.width;
+			this.height;
+		}
+
+		//球模型的构造函数
+		function BouncySquare() {
+			this.x_position = 0;		//这里位置是以元素左上角为目标点的
+			this.y_position = 0;
+			this.square_element = document.createElement("div");
+
+			this.x_velocity = 0;
+			this.y_velocity = 0;
+			this.x_wall_right = 0;
+			this.y_wall_bottom = 0;
+		}
+		BouncySquare.prototype = {
+			side : 0,
+			box_properties : new Box(),
+
+			setSqure : function(side, x_position, y_position, father_element, color_name) {
+				//初始化对象的属性
+				this.side = side;
+				this.x_position = x_position;
+				this.y_position = y_position;
+
+				//处理该球元素，并把它添加到html文档中
+				father_element.appendChild(this.square_element);
+				this.square_element.style.position = "absolute";
+				this.square_element.style.width = this.side + "px";
+				this.square_element.style.height = this.side + "px";
+				this.square_element.style.border = "1px solid black";
+				this.square_element.style.backgroundColor = color_name;
+				this.square_element.style.left = (this.x_position) + "px";
+				this.square_element.style.top = (this.y_position) + "px";
+			},
+			setOtherProperties : function(father_element, box_width, box_height, velocity, angle) {
+				//初始化盒子的属性
+				if(typeof this.box_properties.width === "undefined") {
+					this.box_properties.width = box_width;
+					this.box_properties.height = box_height;
+
+					father_element.style.display = "block";
+					father_element.style.width = box_width + "px";
+					father_element.style.height = box_height + "px";
+				}
+
+				//初始化球的运动属性
+				this.x_velocity = velocity * Math.cos(angle/180 * Math.PI);
+				this.y_velocity = velocity * Math.sin(angle/180 * Math.PI);
+				this.x_wall_right = box_width - this.side;		//5为边界宽度
+				this.y_wall_bottom = box_height -this.side;
+			},
+			letItMoving : function() {
+				var that = this;
+
+				function _letItMoving() {
+					return function() {
+						if(that.x_position <= 0 || that.x_position >= that.x_wall_right) {
+							that.x_velocity = -that.x_velocity;
+						}
+						if(that.y_position <= 0 || that.y_position >= that.y_wall_bottom) {
+							that.y_velocity = -that.y_velocity;
+						}
+
+						that.x_position += that.x_velocity;
+						that.y_position += that.y_velocity;
+
+						that.square_element.style.left = that.x_position + "px";
+						that.square_element.style.top = that.y_position + "px";
+
+						window.setTimeout(_letItMoving(), 1);
+					};
+				}
+				window.setTimeout(_letItMoving(), 1);
+			}
+		}
+
+		function BounceProcess() {
+			this.elements = new Array();
+		}
+		BounceProcess.prototype = {
+			addObject : function(element) {
+				this.elements.push(element);
+			},
+			bounce : function() {
+				for(var i=0, len=this.elements.length; i<len; ++i) {
+					for(var j=i+1; j<len; ++j) {
+						var element_1 = this.elements[i];
+						var element_2 = this.elements[j];
+						var detail_x = Math.abs(element_2.x_position - element_1.x_position);
+						var detail_y = Math.abs(element_2.y_position - element_1.y_position);
+
+						var temp = 0;
+						if(detail_x <= element_1.side && detail_y <= element_1.side) {
+							if(detail_x > detail_y) {		//y方向发生碰撞
+								temp = element_1.y_velocity;
+								element_1.y_velocity = element_2.y_velocity;
+								element_2.y_velocity = temp;
+							}
+							else if(detail_x < detail_y) {		//x方向发生碰撞
+								temp = element_1.x_velocity;
+								element_1.x_velocity = element_2.x_velocity;
+								element_2.x_velocity = temp;
+							}
+							else {		//尖角发生碰撞
+								temp = element_1.y_velocity;
+								element_1.y_velocity = element_2.y_velocity;
+								element_2.y_velocity = temp;
+								temp = element_1.x_velocity;
+								element_1.x_velocity = element_2.x_velocity;
+								element_2.x_velocity = temp;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		function addSquare() {
+			var square_box = document.getElementById("square_box");
+			var data = prompt("请输入方块的特性，中间用空格隔开。顺序为x坐标（0~900以下），y坐标（0~550以下）颜色，运动速度（建议1~5），初速度角度。以下为例子：", "100 100 red 1 150");
+
+			data = data.split(" ");
+
+			var square = new BouncySquare();
+			square.setSqure(35, parseInt(data[0]), parseInt(data[1]), square_box, data[2]);
+			square.setOtherProperties(square_box, 900, 550, parseInt(data[3]), parseInt(data[4]));
+			square.letItMoving();
+
+			bounce.addObject(square);
+		}
+
+		var bounce = new BounceProcess();
+		function doSomething() {
+			return function() {
+				bounce.bounce();
+				setTimeout(doSomething(), 1);
+			}
+		}
+		setTimeout(doSomething(), 2);
+	</script>
+</body>
+</html>

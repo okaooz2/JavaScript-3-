@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>关于this指针取值与传递的问题</title>
+</head>
+<body>
+	<script type="text/javascript">
+	var a = 100;
+		doSomething();
+		function doSomething() {
+			function fn1() {
+				document.write("这是doSomething函数内的fn1函数" + "<br />");
+			    this.fn2();			    
+			}
+			function fn2() {
+			    document.write("这是doSomething函数内的fn1函数" + "<br />");
+			}
+
+			object = {
+				fn1 : function() {
+					document.write("这是object下的fn1函数" + "<br />");
+					this.fn2();	
+				},
+				fn2 : function() {
+					document.write("这是object下的fn2函数" + "<br />");
+				}
+			};
+
+			fn1();		//调用当前位置通过作用域链搜索到的fn1()函数，绑定其执行环境为当前的执行环境（这里为window）
+			document.write("<br />");
+
+			fn1.call(object);		//调用当前位置通过作用域链搜索到的fn1()函数，绑定其执行环境为object
+			document.write("<br />");
+
+			object.fn1();		//调用object环境下的fn1()函数，绑定其执行环境为object
+			document.write("<br />");
+
+			this.fn1.call(object);		//调用当前环境（这里是window）下的fn1()函数，绑定其执行环境为object
+			document.write("<br />");
+
+			object.fn1.call(this);		//调用object下的fn1()函数，绑定其执行环境为当前的执行环境（这里为window）
+			document.write("<br />");
+
+			alert(window.a);
+		}
+
+		function fn1() {
+			document.write("这是window下的fn1函数" + "<br />");
+			this.fn2();	
+		}
+		function fn2() {
+			document.write("这是window下的fn2函数" + "<br />");
+		}
+	</script>	
+</body>
+</html>

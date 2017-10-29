@@ -1,0 +1,127 @@
+<!-- ********************************************************************************
+普通的组合继承，其子对象的原型为父对象的实例，该原型中包含有父对象的私有属性。
+由于父对象的私有属性已经在构造函数中继承，因而子对象原型中的私有属性被屏蔽。
+而改进后的组合继承用空实例作为子对象的原型，这样节约了内存，增加了安全性（私有属性不会被放在共享的原型上）。
+********************************************************************************* -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>改进式组合继承</title>
+</head>
+<body>
+	
+
+
+	<script>
+		function Object1(name) {		//定义父对象的构造函数
+			this.name = name;
+
+			this.sayName = function() {
+				document.write(this.name);
+				document.write("<br />");
+			}
+		}
+		Object1.prototype = {		//重写原型
+			constructor : Object1,
+			name2 : "这才是我的名字",
+
+			sayName2 : function() {
+				document.write(this.name2);
+				document.write("<br />");
+			}
+		}
+
+		function Object2(name, age) {		//定义子对象的构造函数
+			Object1.call(this, name);		//继承Object1对象的私有属性（通过在特定运行环境下执行Object1构造函数实现）
+
+			this.age = age;			//以下均为增强私有属性
+
+			this.sayAge = function() {
+				document.write(this.age);
+				document.write("<br />");
+			}
+		}
+		inheritPrototype(Object2, Object1);		//重写Object2对象的原型，使Object2对象通过一个空原型来继承Object1对象的共享属性
+		Object2.prototype.age2 = 666;		//以下均为增强共享属性
+		Object2.prototype.sayAge2 = function() {
+			document.write(this.age2);
+			document.write("<br />");
+		}
+
+
+		var obj1 = new Object1("地方");
+		document.write(obj1.name);
+		document.write("<br />");
+		document.write(obj1.name2);
+		document.write("<br />");
+		obj1.sayName();
+		obj1.sayName2();
+		// document.write(obj1.age);		//undefined
+		// document.write("<br />");
+		// document.write(obj1.age2);		//undefined
+		// document.write("<br />");
+		// obj1.sayAge();		//error
+		// obj1.sayAge2();		//error
+		document.write("<br />");
+
+		var obj2 = new Object2("发射极", 10);
+		document.write(obj2.name);
+		document.write("<br />");
+		document.write(obj2.name2);
+		document.write("<br />");
+		obj2.sayName();
+		obj2.sayName2();
+		document.write(obj2.age);
+		document.write("<br />");
+		document.write(obj2.age2);
+		document.write("<br />");
+		obj2.sayAge();
+		obj2.sayAge2();
+		document.write("<br />");
+
+		document.write(obj2.constructor.name);
+		document.write("<br /><br />");
+
+		document.write(obj2.constructor);
+		document.write("<br />");
+
+// /***************************************************************************************************
+// 该函数作用为返回一个包含特定原型对象的实例对象
+// 1. 传入的参数obj即返回实例的原型
+// ****************************************************************************************************/
+// 		function setItAsPrototype(obj) {
+// 			function Func(){}		//定义一个空的构造函数
+// 			Func.prototype = obj;		//重写上面构造函数的原型为传入的对象obj
+// 			return new Func();		//返回一个Func实例
+// 		}
+
+// ***************************************************************************************************
+// 该函数作用为重写Obj1对象的原型（重写为空原型），并把该空原型连接到Obj2对象的原型，从而扩展了Obj1对象
+// 的原型链，使Obj1对象能继承Obj2对象的共享属性的同时，能增强自身实例而又不会影响到父对象的实例（这是因
+// 为增强的属性项都添加到自身的空原型上了）
+// 1. Obj1为子对象的构造函数函数名，Obj2为父对象的构造函数函数名
+// ****************************************************************************************************
+// 		function inheritPrototype(Obj1, Obj2) {
+// 			var prototype = setItAsPrototype(Obj2.prototype);	//prototype意为实例，经过后面的操作后他确实也作为传入对象Obj1的实例
+// 			Obj1.prototype = prototype;		//把prototype作为Obj1的实例
+// 			prototype.constructor = Obj1;		//让prototype指向Obj1构造函数，实际上constructor属性会搜索到实例链的末端
+// 		}
+
+/****************************************************************************************************
+该函数作用为重写Obj1对象的原型（重写为空原型），并把该空原型连接到Obj2对象的原型，从而扩展了Obj1对象
+的原型链，使Obj1对象能继承Obj2对象的共享属性的同时，能增强自身实例而又不会影响到父对象的实例（这是因
+为增强的属性项都添加到自身的空原型上了）
+1. Obj1为子对象的构造函数函数名，Obj2为父对象的构造函数函数名
+*****************************************************************************************************/
+		function inheritPrototype(Obj1_child, Obj2_father) {
+			function Func(){}		//定义一个空的构造函数
+			Func.prototype = Obj2_father.prototype;		//重写上面构造函数的原型为Obj2对象的原型
+
+			var prototype = new Func();	//prototype意为实例，经过后面的操作后他确实也作为传入对象Obj1的实例
+			Obj1_child.prototype = prototype;		//把prototype作为Obj1的实例
+			prototype.constructor = Obj1_child;		//让prototype指向Obj1构造函数，实际上constructor属性会搜索到实例链的末端
+		}
+	</script>
+</body>
+</html>

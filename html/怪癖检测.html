@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>怪癖检测</title>
+</head>
+<body>
+
+
+
+
+	<script>
+		document.write(hasEnumerableQuirk() + "<br />");
+		function hasEnumerableQuirk() {
+			var obj = {toString : function() {}};
+			for(var property_name in obj) {
+				if(property_name === "toString") {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		document.write(hasEnumerableShadowsQuirk() + "<br />");
+		function hasEnumerableShadowsQuirk() {
+			var obj = {toString : function() {}};
+			var counter = 0;
+			for(var property_name in obj) {
+				if(property_name === "toString") {
+					++counter;
+				}
+			}
+			return (counter > 1);
+		}
+	</script>
+</body>
+</html>

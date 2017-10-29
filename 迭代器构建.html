@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>迭代器构建</title>
+	<style>
+		body  {
+			text-align: center;
+			background-color: #DCDCDC;
+			border: solid white 3px;
+		}
+		div#resual_board {
+			display: block;
+			margin: 0 auto;
+			width: 85%;
+			background-color: #F0E68C;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div>
+			<h1>这是一级标题</h1>
+			<h2>这是二级标题</h2>
+			<p>这是段落</p>
+		</div>
+		<br /><br />
+
+		<div>
+			<ul>
+				<li><a href="#">链接1</a></li>
+				<li><a href="#">链接2</a></li>
+				<li><a href="#">链接3</a></li>
+				<li><a href="#">链接4</a></li>
+				<li><a href="#">链接5</a></li>
+			</ul>
+		</div>
+		<br /><br />
+
+		<div>
+			<table width="500px" border="2px">
+				<caption>这是表格标题</caption>
+				<th>这是表头单元格</th>
+				<tr>
+					<td>单元格(0, 0)</td>
+					<td>单元格(0, 1)</td>
+					<td>单元格(0, 2)</td>
+				</tr>
+				<tr>
+					<td class="here">单元格(1, 0)</td>
+					<td>单元格(1, 1)</td>
+					<td>单元格(1, 2)</td>
+				</tr>
+				<tr>
+					<td>单元格(2, 0)</td>
+					<td>单元格(2, 1)</td>
+					<td>单元格(2, 2)</td>
+				</tr>
+				<tr>
+					<td>单元格(3, 0)</td>
+					<td class="here">单元格(3, 1)</td>
+					<td>单元格(3, 2)</td>
+				</tr>
+			</table>
+		</div>
+		<br /><br />
+	</div>
+
+	<input type="button" value="do" onclick="doSomething();" />
+
+
+	<div id="resual_board">
+		<p>结果看板</p>
+	</div>
+
+
+
+	<script>
+		function doSomething() {
+			// var initial_element = document.getElementById("here");
+			var initial_element = document.body;
+
+			allNode(initial_element);
+		}
+
+		function allNode(initial_element) {
+			var iterator =  document.createNodeIterator(initial_element, NodeFilter.SHOW_ELEMENT, filter, false);
+			var resual_board = document.querySelector("#resual_board");
+
+			var node = iterator.nextNode();
+			var text = "";
+			while(node !== null) {
+				text += node.tagName.toLowerCase() + "<br />";
+				if(node.className === "here") {
+					node.style.backgroundColor = "yellow";
+				}
+				node = iterator.nextNode();
+			}
+			resual_board.innerHTML += text;
+
+			function filter(node) {
+				return node.tagName.toLowerCase() === "td" ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+			}
+		}
+	</script>
+</body>
+</html>
