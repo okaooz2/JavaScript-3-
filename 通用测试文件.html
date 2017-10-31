@@ -12,25 +12,20 @@
 	</style>
 </head>
 <body>
-	
+	<input type="button" value="测试(html内部)" onclick="console.log(value);this.onclick=null;">
+	<input type="button" id="my-button" value="测试(JS嵌入)">
+
 
 	
 	<script>
-		console.log("hellow");
+		var my_button = document.getElementById("my-button");
+		my_button.onclick = function() {
+			// console.log(value);		//error
+			console.log(this.value);	//ok
+			console.log("id: " + this.id);
 
-		function doSomething() {
-			var i = 100;
-			var j = 200;
-
-			function resual() {
-				return {i: j, j: i,};
-			}
-
-			return false;
+			this.onclick = null;
 		}
-		
-
-		console.log(doSomething.resual());
 	</script>
 </body>
 </html>
