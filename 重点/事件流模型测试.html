@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="father">
-        <button onclick="console.log('你点击了按钮1');console.log('阶段为：'+event.eventPhase);event.target.style.backgroundColor='red';event.currentTarget.style.border='3px blue solid';">按钮1</button>
+        <button onclick="console.log('你点击了按钮1');console.log('阶段为：'+event.eventPhase);event.currentTarget.style.border='3px blue solid';">按钮1</button>
         <button id="button-2">按钮2</button>
     </div>
     <br><br><br>
@@ -29,6 +29,7 @@
             console.log("阶段为：" + event.eventPhase);
             event.target.style.backgroundColor = "red";     //经测试，target属性表示你点击的元素本身
             event.currentTarget.style.border = "3px blue solid";    //currentTarget指当前执行函数的元素，即this
+            event.stopPropagation();
         }
 
         var father = document.getElementById("father");

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取鼠标位置</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            height: 100vh;      /*重要*/
+        }
+        div#circle {
+            position: absolute;
+            border: 10px red solid;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="circle"></div>
+
+
+
+    <script>
+        var circle = document.getElementById("circle");
+        document.body.addEventListener("mousemove", moving, false);
+        function moving(event) {
+            circle.style.left = event.clientX + "px";
+            circle.style.top = event.clientY + "px";
+        }
+    </script>
+</body>
+</html>
