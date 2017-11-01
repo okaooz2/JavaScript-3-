@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件流模型测试</title>
+    <style>
+        div#father {
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="father">
+        <button onclick="console.log('你点击了按钮1');console.log('阶段为：'+event.eventPhase);event.target.style.backgroundColor='red';event.currentTarget.style.border='3px blue solid';">按钮1</button>
+        <button id="button-2">按钮2</button>
+    </div>
+    <br><br><br>
+
+
+
+    <script>
+        var button2 = document.getElementById("button-2");
+        button2.addEventListener("click", button2Func, false);
+        function button2Func(event) {
+            console.log("你点击了按钮2");
+            console.log("阶段为：" + event.eventPhase);
+            event.target.style.backgroundColor = "red";     //经测试，target属性表示你点击的元素本身
+            event.currentTarget.style.border = "3px blue solid";    //currentTarget指当前执行函数的元素，即this
+        }
+
+        var father = document.getElementById("father");
+        father.onclick = function() {       //由结果知，onclick执行函数阶段为冒泡阶段
+            console.log("father元素执行函数");
+            console.log("阶段为：" + event.eventPhase);
+            event.target.style.backgroundColor = "red";
+            event.currentTarget.style.border = "3px blue solid";
+        };
+
+        var body = document.body;
+        body.addEventListener("click", bodyFunc, true);     //true表示在捕获阶段就执行函数
+        function bodyFunc() {
+            console.log("body元素执行函数");
+            console.log("阶段为：" + event.eventPhase);
+            event.target.style.backgroundColor = "red";
+            event.currentTarget.style.border = "3px blue solid";
+        }
+    </script>
+</body>
+</html>

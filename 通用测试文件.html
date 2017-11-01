@@ -5,27 +5,80 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>通用测试文件</title>
+	<script>
+		var time_count_start = +new Date();
+	</script>
 	<style>
 		body {
-			background-color: #d3d3d3e8;
+			background-color: #f3f57dd0;
 		}
 	</style>
 </head>
 <body>
-	<input type="button" value="测试(html内部)" onclick="console.log(value);this.onclick=null;">
+			
+	<input type="button" value="测试(html内部)" onclick="console.log(value);event.stopPropagation();console.log('按钮1：'+event.eventPhase);onclick=null;">
 	<input type="button" id="my-button" value="测试(JS嵌入)">
+	<a href="https://www.baidu.com">去百度</a>
 
 
 	
 	<script>
-		var my_button = document.getElementById("my-button");
-		my_button.onclick = function() {
-			// console.log(value);		//error
-			console.log(this.value);	//ok
-			console.log("id: " + this.id);
+		document.body.addEventListener("click", function(event){
+			console.log("body执行事件");
+			event.target.style.backgroundColor = "green";
+			event.currentTarget.style.border = "5px blue solid";
+			console.log("body："+event.eventPhase);
+		}, true);
 
-			this.onclick = null;
+		var my_button = document.getElementById("my-button");
+		
+		my_button.onclick = handler;
+		my_button.onmouseover = handler;
+		// my_button.onmousewheel = handler;
+		my_button.onmouseout = handler;
+		function handler(event) {
+			console.log("按钮2："+event.eventPhase);
+			switch(event.type) {
+				case "click": console.log("你点击了按钮"); break;
+				case "mouseover": this.style.backgroundColor = "red"; break;
+				// case "onmousewheel": this.style.backgroundColor = "blue"; break;
+				case "mouseout": this.style.backgroundColor = ""; break;
+				default: break;
+			}
 		}
+
+		var my_link = document.getElementsByTagName("a")[0];
+		my_link.addEventListener("click", function(event){
+			event.preventDefault();
+			event.currentTarget.style.border = "5px blue solid";
+			console.log("链接："+event.eventPhase);
+			console.log("你已经取消了该点击的默认行为");
+		}, false);
+	</script>
+	<script>
+		function displayProperties(object) {
+			var counter_functions = 0;
+			var counter_variates = 0;
+			var functions = "";
+			var variates = "";
+			for(var property in object) {
+				if(typeof object[property] === "function") {
+					functions += property + "<br>";
+					++counter_functions;
+				}
+				else {
+					variates += property + "<br>";
+					++counter_variates;	
+				}
+			}
+			document.write("共有" + (counter_functions + counter_variates) + "个属性" + "<br>");
+			document.write("<br>类变量有" + counter_variates + "个：" + "<br>" + variates);
+			document.write("<br>类方法有" + counter_functions + "个：" + "<br>" + functions);
+		}
+	</script>
+	<script>
+		var time_count_end = +new Date();
+		document.write("<br><br><br>" + "总共用时：" +  (time_count_end - time_count_start) + "毫秒");
 	</script>
 </body>
 </html>
