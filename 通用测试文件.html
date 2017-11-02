@@ -23,6 +23,7 @@
 		window.addEventListener("load", doSomething, false);
 		function doSomething() {
 			var p = document.querySelector("p#my_p");
+			p.innerHTML = "window.orientation = " + window.orientation;
 
 			window.addEventListener("orientationchange", function(event){
 				p.innerHTML = "window.orientation = " + window.orientation;
