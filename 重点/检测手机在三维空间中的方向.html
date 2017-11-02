@@ -14,18 +14,32 @@
     
         
         <script>
-            var p_alpha = document.querySelector("p#alpha");
-            var p_beta = document.querySelector("p#beta");
-            var p_gamma = document.querySelector("p#gamma");
-            p_alpha.innerHTML = "event.alpha = ";
-            p_beta.innerHTML = "event.beta = ";
-            p_gamma.innerHTML = "event.gamma = ";
-    
-            window.addEventListener("deviceorientation", function(event){
-                p_alpha.innerHTML = "event.alpha = " + event.alpha;
-                p_beta.innerHTML = "event.beta = " + event.beta;
-                p_gamma.innerHTML = "event.gamma = " + event.gamma;
-            }, false);
+           window.addEventListener("load", doSomething, false);
+           function doSomething() {
+               p_direction = document.querySelectorAll("p.direction");
+               p_acceleration = document.querySelectorAll("p.acceleration");
+               p_Gacceleration = document.querySelectorAll("p.Gacceleration");
+   
+               window.addEventListener("deviceorientation", function(event){
+                   p_direction[0].innerHTML = "event.alpha = " + event.alpha;
+                   p_direction[1].innerHTML = "event.beta = " + event.beta;
+                   p_direction[2].innerHTML = "event.gamma = " + event.gamma;
+               }, false);
+   
+               window.addEventListener("devicemotion", function(event){
+                   // p_direction[0].innerHTML = "event.alpha = " + event.rotationRate.alpha;
+                   // p_direction[1].innerHTML = "event.beta = " + event.rotationRate.beta;
+                   // p_direction[2].innerHTML = "event.gamma = " + event.rotationRate.gamma;
+   
+                   p_acceleration[0].innerHTML = "acceleration.x = " + event.acceleration.x;
+                   p_acceleration[1].innerHTML = "acceleration.y = " + event.acceleration.y;
+                   p_acceleration[2].innerHTML = "acceleration.z = " + event.acceleration.z;
+   
+                   p_Gacceleration[0].innerHTML = "Gacceleration.x = " + event.accelerationIncludingGravity.x;
+                   p_Gacceleration[1].innerHTML = "Gacceleration.y = " + event.accelerationIncludingGravity.y;
+                   p_Gacceleration[2].innerHTML = "Gacceleration.z = " + event.accelerationIncludingGravity.z;
+               }, false);
+           }
         </script>
 </body>
 </html>

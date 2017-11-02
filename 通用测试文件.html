@@ -39,10 +39,16 @@
 			p_acceleration = document.querySelectorAll("p.acceleration");
 			p_Gacceleration = document.querySelectorAll("p.Gacceleration");
 
+			window.addEventListener("deviceorientation", function(event){
+                p_direction[0].innerHTML = "event.alpha = " + event.alpha;
+                p_direction[1].innerHTML = "event.beta = " + event.beta;
+                p_direction[2].innerHTML = "event.gamma = " + event.gamma;
+            }, false);
+
 			window.addEventListener("devicemotion", function(event){
-				p_direction[0].innerHTML = "event.alpha = " + event.rotationRate.alpha;
-				p_direction[1].innerHTML = "event.beta = " + event.rotationRate.beta;
-				p_direction[2].innerHTML = "event.gamma = " + event.rotationRate.gamma;
+				// p_direction[0].innerHTML = "event.alpha = " + event.rotationRate.alpha;
+				// p_direction[1].innerHTML = "event.beta = " + event.rotationRate.beta;
+				// p_direction[2].innerHTML = "event.gamma = " + event.rotationRate.gamma;
 
 				p_acceleration[0].innerHTML = "acceleration.x = " + event.acceleration.x;
 				p_acceleration[1].innerHTML = "acceleration.y = " + event.acceleration.y;
