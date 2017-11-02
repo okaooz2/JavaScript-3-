@@ -25,7 +25,7 @@
 	</style>
 </head>
 <body>
-	<p>1</p>
+	<p>3</p>
 	<p class="circle-position"></p>
 	<div class="circle"></div>
 	
@@ -38,6 +38,11 @@
 			var circle = document.querySelector("div.circle");
 
 			circle_position.innerHTML = "position: (" + circle.style.left + ", " + circle.style.top + ")";
+			document.addEventListener("touchstart", function(){
+				circle.style.left = event.touches[0].clientX + "px";
+				circle.style.top = event.touches[0].clientY + "px";
+				circle_position.innerHTML = "position: (" + event.changedTouches[0].clientX + ", " + event.changedTouches[0].clientY + ")";
+			}, false);
 			document.addEventListener("touchmove", function(event){
 				event.preventDefault();
 				circle.style.left = event.changedTouches[0].clientX + "px";
