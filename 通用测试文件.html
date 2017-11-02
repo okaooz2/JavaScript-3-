@@ -23,7 +23,10 @@
 		window.addEventListener("load", doSomething, false);
 		function doSomething() {
 			var p = document.querySelector("p#my_p");
-			p.innerHTML = "hellow" + window.orientation;
+
+			p.addEventListener("orientationchange", function(event){
+				p.innerHTML = "window.orientation = " + window.orientation;
+			}, false);
 		}
 	</script>
 	<script>
