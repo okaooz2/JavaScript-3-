@@ -15,41 +15,16 @@
 	</style>
 </head>
 <body>
-			
-	<input type="text">
-	<input type="text">
+	<p id="my_p"></p>
 
 
 	
 	<script>
-		var body = document.body;
-		body.addEventListener("textInput", enterKey1, false);
-		function enterKey1(event) {
-			console.log("你按下了某按键");
-			// console.log("键码：" + event.charCode + "--->" + String.fromCharCode(event.charCode));
-			console.log(event.data);
-			// console.log(event.inputMethod);		//chrome不支持该属性
+		window.addEventListener("load", doSomething, false);
+		function doSomething() {
+			var p = document.querySelector("p#my_p");
+			p.innerHTML = "hellow" + window.orientation;
 		}
-		// if("undefined") {		//若为字符串，则转换为true
-		// 	alert(1);
-		// }
-		// if("number") {
-		// 	alert(2);
-		// }
-		// if(body.aaa) {		//若未定义则转化为false
-		// 	alert(3);
-		// }
-		// if(typeof body.aaa) {		//此处括号里结果为字符串，则为true
-		// 	alert(4);
-		// }
-		// body.addEventListener("keypress", enterKey2, false);
-		// function enterKey2(event) {
-		// 	console.log("你按下了某字符按键");
-		// }
-		// body.addEventListener("keyup", enterKey3, false);
-		// function enterKey3(event) {
-		// 	console.log("你松开了按键");
-		// }
 	</script>
 	<script>
 		function displayProperties(object) {
