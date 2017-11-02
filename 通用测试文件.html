@@ -15,18 +15,23 @@
 	</style>
 </head>
 <body>
-	<p id="my_p"></p>
+	<p id="alpha"></p>
+	<p id="beta"></p>
+	<p id="gamma"></p>
 
 
 	
 	<script>
 		window.addEventListener("load", doSomething, false);
 		function doSomething() {
-			var p = document.querySelector("p#my_p");
-			p.innerHTML = "window.orientation = " + window.orientation;
+			var p_alpha = document.querySelector("p#alpha");
+			var p_beta = document.querySelector("p#beta");
+			var p_gamma = document.querySelector("p#gamma");
 
-			window.addEventListener("orientationchange", function(event){
-				p.innerHTML = "window.orientation = " + window.orientation;
+			window.addEventListener("deviceorientation", function(event){
+				p_alpha.innerHTML = "event.alpha = " + event.alpha;
+				p_beta.innerHTML = "event.beta = " + event.beta;
+				p_gamma.innerHTML = "event.gamma = " + event.gamma;
 			}, false);
 		}
 	</script>
