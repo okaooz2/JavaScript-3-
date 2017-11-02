@@ -14,35 +14,23 @@
 			height: 100vh;
 			background-color: #f3f57d;
 		}
-		div.circle {
-			transform: translate(-50%, -50%);
-			position: absolute;
-			left: 100px;
-			top: 100px;
-			border: 15px red solid;
-			border-radius: 50%;
-		}
 	</style>
 </head>
 <body>
-	<p>2</p>
-	<p class="circle-position"></p>
-	<div class="circle"></div>
+	<p>6666</p>
+	<p class="board"></p>
+	<p class="board"></p>
 	
 
 	
 	<script>
 		window.addEventListener("load", doSomething, false);
 		function doSomething() {
-			var circle_position = document.querySelector("p.circle-position");
-			var circle = document.querySelector("div.circle");
-			circle_position.innerHTML = "position: (" + circle.style.left + ", " + circle.style.top + ")";
+			var boards = document.querySelectorAll("p.board");
 
-			circle.addEventListener("touchstart"&&"touchmove", function(){
-				event.preventDefault();
-				circle.style.left = event.touches[0].clientX + "px";
-				circle.style.top = event.touches[0].clientY + "px";
-				circle_position.innerHTML = "position: (" + event.changedTouches[0].clientX + ", " + event.changedTouches[0].clientY + ")";
+			document.addEventListener("gesturestart"&&"gesturechange", function(event){
+				boards[0].innerHTML = event.rotation;
+				boards[1].innerHTML = event.scale;
 			}, false);
 		}
 	</script>
