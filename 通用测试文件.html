@@ -37,6 +37,7 @@
 			document.addEventListener("touchmove", function(event){
 				circle.style.left = event.changedTouches[0].clientX;
 				circle.style.top = event.changedTouches[0].clientY;
+				circle_position.innerHTML = "position: (" + event.changedTouches[0].clientX + ", " + event.changedTouches[0].clientY + ")";
 			}, false);
 		}
 	</script>
