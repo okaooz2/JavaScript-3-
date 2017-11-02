@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>UI-获取触屏位置</title>
+    <style>
+        body {
+            overflow: hidden;
+            height: 100vh;
+            background-color: #f3f57d;
+        }
+        div.circle {
+            transform: translate(-50%, -50%);
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 15px red solid;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <p class="circle-position"></p>
+    <div class="circle"></div>
+
+
+
+    <script>
+        window.addEventListener("load", doSomething, false);
+        function doSomething() {
+            var circle_position = document.querySelector("p.circle-position");
+            var circle = document.querySelector("div.circle");
+
+            circle_position.innerHTML = "position: (" + circle.style.left + ", " + circle.style.top + ")";
+            document.addEventListener("touchmove", function(event){
+                event.preventDefault();
+                circle.style.left = event.changedTouches[0].clientX + "px";
+                circle.style.top = event.changedTouches[0].clientY + "px";
+                circle_position.innerHTML = "position: (" + event.changedTouches[0].clientX + ", " + event.changedTouches[0].clientY + ")";
+            }, false);
+        }
+    </script>
+</body>
+</html>
