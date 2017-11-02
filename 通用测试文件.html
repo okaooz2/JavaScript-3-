@@ -15,26 +15,36 @@
 	</style>
 </head>
 <body>
-	<P>666</P>
-	<p id="alpha"></p>
-	<p id="beta"></p>
-	<p id="gamma"></p>
+	<p class="direction"></p>
+	<p class="direction"></p>
+	<p class="direction"></p>
+
+	<p class="acceleration"></p>
+	<p class="acceleration"></p>
+	<p class="acceleration"></p>
 
 
 	
 	<script>
-		var p_alpha = document.querySelector("p#alpha");
-		var p_beta = document.querySelector("p#beta");
-		var p_gamma = document.querySelector("p#gamma");
-		p_alpha.innerHTML = "event.alpha = ";
-		p_beta.innerHTML = "event.beta = ";
-		p_gamma.innerHTML = "event.gamma = ";
+		window.addEventListener("load", doSomething, false);
+		function doSomething() {
+			p_direction = document.querySelectorAll("p.direction");
+			p_acceleration = document.querySelectorAll("p.acceleration");
 
-		window.addEventListener("deviceorientation", function(event){
-			p_alpha.innerHTML = "event.alpha = " + event.alpha;
-			p_beta.innerHTML = "event.beta = " + event.beta;
-			p_gamma.innerHTML = "event.gamma = " + event.gamma;
-		}, false);
+			p_direction[0].innerHTML = "event.alpha = ";
+			p_direction[1].innerHTML = "event.beta = ";
+			p_direction[2].innerHTML = "event.gamma = ";
+
+			window.addEventListener("devicemotion", function(event){
+				p_direction[0].innerHTML = "event.alpha = " + event.alpha;
+				p_direction[1].innerHTML = "event.beta = " + event.beta;
+				p_direction[2].innerHTML = "event.gamma = " + event.gamma;
+
+				p_acceleration[0].innerHTML = "acceleration.x = " + event.acceleration.x;
+				p_acceleration[1].innerHTML = "acceleration. y = " + event.acceleration.y;
+				p_acceleration[2].innerHTML = "acceleration.z = " + event.acceleration.z;
+			}, false);
+		}
 	</script>
 	<script>
 		function displayProperties(object) {
