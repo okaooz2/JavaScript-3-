@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>检测手机在三维空间中的方向</title>
+</head>
+<body>
+        <p id="alpha"></p>
+        <p id="beta"></p>
+        <p id="gamma"></p>
+    
+    
+        
+        <script>
+            window.addEventListener("load", doSomething, false);
+            function doSomething() {
+                var p_alpha = document.querySelector("p#alpha");
+                var p_beta = document.querySelector("p#beta");
+                var p_gamma = document.querySelector("p#gamma");
+                p_alpha.innerHTML = "event.alpha = " + event.alpha;
+				p_beta.innerHTML = "event.beta = " + event.beta;
+				p_gamma.innerHTML = "event.gamma = " + event.gamma;
+    
+                window.addEventListener("deviceorientation", function(event){
+                    p_alpha.innerHTML = "event.alpha = " + event.alpha;
+                    p_beta.innerHTML = "event.beta = " + event.beta;
+                    p_gamma.innerHTML = "event.gamma = " + event.gamma;
+                }, false);
+            }
+        </script>
+</body>
+</html>

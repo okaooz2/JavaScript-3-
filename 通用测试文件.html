@@ -27,6 +27,9 @@
 			var p_alpha = document.querySelector("p#alpha");
 			var p_beta = document.querySelector("p#beta");
 			var p_gamma = document.querySelector("p#gamma");
+			p_alpha.innerHTML = "event.alpha = " + event.alpha;
+			p_beta.innerHTML = "event.beta = " + event.beta;
+			p_gamma.innerHTML = "event.gamma = " + event.gamma;
 
 			window.addEventListener("deviceorientation", function(event){
 				p_alpha.innerHTML = "event.alpha = " + event.alpha;
