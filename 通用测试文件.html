@@ -10,7 +10,7 @@
 	</script>
 	<style>
 		body {
-			background-color: yellow;	/*#f3f57dd0*/
+			background-color: #f3f57d;
 		}
 		div.circle {
 			position: absolute;
@@ -35,8 +35,8 @@
 
 			circle_position.innerHTML = "position: (" + circle.style.left + ", " + circle.style.top + ")";
 			document.addEventListener("touchmove", function(event){
-				circle.style.left = event.changedTouches[0].clientX;
-				circle.style.top = event.changedTouches[0].clientY;
+				circle.style.left = event.changedTouches[0].clientX + "px";
+				circle.style.top = event.changedTouches[0].clientY + "px";
 				circle_position.innerHTML = "position: (" + event.changedTouches[0].clientX + ", " + event.changedTouches[0].clientY + ")";
 			}, false);
 		}
