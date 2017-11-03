@@ -1,33 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Gesture Events Example</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>通用测试文件</title>
+	<script>
+		var time_count_start = +new Date();
+	</script>
+	<style>
+		body {
+			overflow: hidden;
+			height: 100vh;
+			background-color: #f3f57d;
+		}
+	</style>
 </head>
 <body>
-    <p>Touch anywhere on the screen with two fingers. This only works on an iPhone or iPod Touch running iPhone 2.x software.</p>
-    <div id="output"> 
-    </div>
-    <script type="text/javascript">
-        function handleGestureEvent(event){        
-            var output = document.getElementById("output");
-            switch(event.type){
-                case "gesturestart":
-                    output.innerHTML = "Gesture started (rotation=" + event.rotation + ",scale=" + event.scale + ")";
-                    break;
-                case "gestureend":
-                    output.innerHTML += "<br>Gesture ended (rotation=" + event.rotation + ",scale=" + event.scale + ")";
-                    break;
-                case "gesturechange":
-                    output.innerHTML += "<br>Gesture changed (rotation=" + event.rotation + ",scale=" + event.scale + ")";
-                    break;
-            }
-        }
-        
-        document.addEventListener("gesturestart", handleGestureEvent, false);
-        document.addEventListener("gestureend", handleGestureEvent, false);
-        document.addEventListener("gesturechange", handleGestureEvent, false);
+	<p>6666</p>
+	<p class="board"></p>
+	<p class="board"></p>
+	
 
-    </script>
+	
+	<script>
+		window.addEventListener("load", doSomething, false);
+		function doSomething() {
+			var boards = document.querySelectorAll("p.board");
+
+			//我的手机似乎不知此此功能
+			document.addEventListener("gesturestart"&&"gesturechange", function(event){
+				boards[0].innerHTML = event.rotation;
+				boards[1].innerHTML = event.scale;
+			}, false);
+		}
+	</script>
+	<script>
+		function displayProperties(object) {
+			var counter_functions = 0;
+			var counter_variates = 0;
+			var functions = "";
+			var variates = "";
+			for(var property in object) {
+				if(typeof object[property] === "function") {
+					functions += property + "<br>";
+					++counter_functions;
+				}
+				else {
+					variates += property + "<br>";
+					++counter_variates;	
+				}
+			}
+			document.write("共有" + (counter_functions + counter_variates) + "个属性" + "<br>");
+			document.write("<br>类变量有" + counter_variates + "个：" + "<br>" + variates);
+			document.write("<br>类方法有" + counter_functions + "个：" + "<br>" + functions);
+		}
+	</script>
+	<script>
+		var time_count_end = +new Date();
+		document.write("<br><br><br>" + "总共用时：" +  (time_count_end - time_count_start) + "毫秒");
+	</script>
 </body>
 </html>
