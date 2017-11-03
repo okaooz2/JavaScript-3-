@@ -13,44 +13,129 @@
             font-size: 1em;
         }
 
-        /* 设置画布样式 */
-        canvas.box {
-            display: block;
-            width: 250px;
-            height: 400px;
-            margin: 0 auto;
-            border: red 3px solid;
-            background-color: #ddd;
-        }
     </style>
 </head>
 <body>
-    <canvas class="box"></canvas>
+    <!-- <canvas class="box">您的浏览器不支持canvas!</canvas> -->
+    <div class="box"></div>
+    
 
 
 
     <script>
+        //定义方块对象
+        function Square(position_x, position_y) {
+            this.position_x = position_x;
+            this.position_y = position_y;
+            this.x_flag = false;        //true表示往右运动，false表示往左运动
+            this.y_flag = false;        //true表示往下运动，false表示往上运动
+        }
+        Square.prototype = {
+            side_length: 0,
+            wall_right: 0,
+            wall_bottom: 0,
+
+            setProtoProperty: function(side_length, box_width, box_height) {
+                this.side_length = side_length;
+                this.wall_right = box_width - side_length;
+                this.wall_bottom = box_height - side_length;
+            },
+            moving: function(context) {
+                var that = this;
+                function _moving() {
+                    return function() {
+                        context.clearRect(that.position_x, that.position_y, that.side_length, that.side_length);
+
+                        //设置x轴运动方向
+                        if(that.position_x <= 0) {
+                            that.x_flag = true;
+                        }
+                        else if(that.position_x >= that.wall_right) {
+                            that.x_flag = false;
+                        }
+                        //设置y轴运动方向
+                        if(that.position_y <= 0) {
+                            that.y_flag = true;
+                        }
+                        else if(that.position_y >= that.wall_bottom) {
+                            that.y_flag = false;
+                        }
+                        
+                        that.position_x = that.x_flag ? ++that.position_x : --that.position_x;
+                        that.position_y = that.y_flag ? ++that.position_y : --that.position_y;
+
+                        //画图
+                        context.beginPath();
+                        context.lineWidth = 4;      //此处默认线宽为4
+                        context.fillStyle = "yellow";
+                        context.strokeStyle = "red";
+                        context.fillRect(that.position_x, that.position_y, that.side_length, that.side_length);
+                        context.strokeRect(that.position_x+2, that.position_y+2, that.side_length-4, that.side_length-4);
+                        requestAnimationFrame(_moving()); 
+                    }
+                }
+                requestAnimationFrame(_moving());
+            }
+        }
+    </script>
+    <!-- <script>
+        //定义碰撞的抽象组合对象
+        function Bounce() {
+            this.squares = new Array();
+        }
+        Bounce.prototype = {
+            //新增一个参加碰撞的实例
+            addSquare: function(square) {
+                this.squares.push(square);
+            },
+            bouncing: function() {
+                for(var i=0, len=this.squares.length; i<len; ++i) {
+                    for(var j=i+1; j<len; ++j) {
+                        var delta_x = Math.abs(squares[i].position_x - squares[j].position_x);
+                        var delta_y = Math.abs(squares[i].position_y - squares[j].position_y);
+
+                        if()
+                    }
+                }
+            }
+        }
+    </script> -->
+    <script>
         window.addEventListener("load", doSomeing, false);
         function doSomeing() {
-            var canvas = document.querySelector("canvas.box");
+            //创建各元素
+            var box = document.querySelector("div.box");
+            var canvas = document.createElement("canvas");
+            canvas.style = "display: block; margin: 0 auto; border: 3px, black, solid; background-color: #ddd;";
+            box.appendChild(canvas);
+            // var bottons = document.createElement("button");
 
             //根据用户输入初始化画布尺寸
-            var canSize_width = 0;
-            var canSize_height = 0;
+            var box_width = 0;
+            var box_height = 0;
             (function() {
                 var canvas_size = prompt("请输入箱子大小（中间用空格隔开）", "250 400");
                 if(canvas_size !== null) {
                     canvas_size = canvas_size.split(/ +/);      //这里正则表达式不需要用引号括起来
-                    canSize_width = parseInt(canvas_size[0]);
-                    canSize_height = parseInt(canvas_size[1]);
+                    box_width = parseInt(canvas_size[0]);
+                    box_height = parseInt(canvas_size[1]);
                 }
                 else {
-                    canSize_width = 250;
-                    canSize_height = 400;
+                    box_width = 250;        //默认值
+                    box_height = 400;
                 }
-                canvas.style.width = canSize_width + "px";
-                canvas.style.height = canSize_height + "px";
+                canvas.width = box_width;           //这里千万不要修改style.with和style.height的值
+                canvas.height = box_height;
             })();
+            
+            var context = canvas.getContext("2d");
+            addSquare(canvas, context);
+        }
+
+        function addSquare(canvas, context) {
+            var squre = new Square(0, 0);
+            squre.setProtoProperty(20, canvas.width, canvas.height);
+            squre.moving(context);
         }
     </script>
 </body>
