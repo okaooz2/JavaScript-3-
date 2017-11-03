@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹性方块4</title>
+    <style>
+        /* reset */
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 1em;
+        }
+
+        /* 设置画布样式 */
+        canvas.box {
+            display: block;
+            width: 250px;
+            height: 400px;
+            margin: 0 auto;
+            border: red 3px solid;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="box"></canvas>
+
+
+
+    <script>
+        window.addEventListener("load", doSomeing, false);
+        function doSomeing() {
+            var canvas = document.querySelector("canvas.box");
+
+            //根据用户输入初始化画布尺寸
+            var canSize_width = 0;
+            var canSize_height = 0;
+            (function() {
+                var canvas_size = prompt("请输入箱子大小（中间用空格隔开）", "250 400");
+                if(canvas_size !== null) {
+                    canvas_size = canvas_size.split(/ +/);      //这里正则表达式不需要用引号括起来
+                    canSize_width = parseInt(canvas_size[0]);
+                    canSize_height = parseInt(canvas_size[1]);
+                }
+                else {
+                    canSize_width = 250;
+                    canSize_height = 400;
+                }
+                canvas.style.width = canSize_width + "px";
+                canvas.style.height = canSize_height + "px";
+            })();
+        }
+    </script>
+</body>
+</html>
