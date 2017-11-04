@@ -157,7 +157,7 @@ function buildBounceBox() {
     var box_height = 0;
     var side_length = 0;
     (function() {
-        var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 25");
+        var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 30");
         if(canvas_size !== null) {
             canvas_size = canvas_size.split(/ +/);      //这里正则表达式不需要用引号括起来
             box_width = parseInt(canvas_size[0]);
@@ -167,7 +167,7 @@ function buildBounceBox() {
         else {
             box_width = 290;        //默认值
             box_height = 340;
-            side_length = 25;
+            side_length = 30;
         }
         canvas.width = box_width;           //这里千万不要修改style.with和style.height的值
         canvas.height = box_height;
