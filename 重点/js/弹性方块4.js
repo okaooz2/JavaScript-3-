@@ -132,7 +132,7 @@ function buildBounceBox() {
                                         that.squares[j].y_flag = false;
                                     }
                                 }
-                                else {
+                                else if(delta_x <= thst.side_length - 2) {   //减2是为了稳定对角碰撞的效果
                                     that.squares[i].x_flag = !that.squares[i].x_flag;
                                     that.squares[j].x_flag = !that.squares[j].x_flag;
                                     that.squares[i].y_flag = !that.squares[i].y_flag;
