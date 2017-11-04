@@ -24,16 +24,65 @@
 
 	
 	<script>
-		window.addEventListener("load", doSomething, false);
-		function doSomething() {
-			var boards = document.querySelectorAll("p.board");
-
-			//我的手机似乎不知此此功能
-			document.addEventListener("gesturestart"&&"gesturechange", function(event){
-				boards[0].innerHTML = event.rotation;
-				boards[1].innerHTML = event.scale;
-			}, false);
+		function Aaa() {
+			this.aaa = 123;
 		}
+		Aaa.prototype = {
+			bbb: [555]
+		}
+
+		one();
+		function one() {
+			console.log("----------------------");
+
+			var a = new Aaa();
+			var b = new Aaa();
+			console.log(a.aaa);
+			console.log(b.aaa);
+			console.log(a.bbb[0]);
+			console.log(b.bbb[0]);
+
+			a.aaa = 0;
+			a.bbb[0] = 1;
+			console.log("");
+			console.log(a.aaa);
+			console.log(b.aaa);
+			console.log(a.bbb[0]);
+			console.log(b.bbb[0]);
+
+			a = b = null;
+			c = new Aaa();
+			console.log("");
+			console.log(c.aaa);
+			console.log(c.bbb[0]);
+		}
+		
+		tow();
+		function tow() {
+			console.log("----------------------");
+
+			var a = new Aaa();
+			var b = new Aaa();
+			console.log(a.aaa);
+			console.log(b.aaa);
+			console.log(a.bbb[0]);
+			console.log(b.bbb[0]);
+
+			a.aaa = 0;
+			a.bbb[0] = 1;
+			console.log("");
+			console.log(a.aaa);
+			console.log(b.aaa);
+			console.log(a.bbb[0]);
+			console.log(b.bbb[0]);
+
+			a = b = null;
+			c = new Aaa();
+			console.log("");
+			console.log(c.aaa);
+			console.log(c.bbb[0]);
+		}	
+		
 	</script>
 	<script>
 		function displayProperties(object) {
