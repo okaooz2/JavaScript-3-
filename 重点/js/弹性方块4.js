@@ -108,7 +108,6 @@ function buildBounceBox() {
                             var _y = that.squares[j].position_y - that.squares[i].position_y;
                             var delta_x = Math.abs(_x);
                             var delta_y = Math.abs(_y);
-
                            
                             if(delta_x <= that.side_length && delta_y <= that.side_length) {
                                 //x方向碰撞
