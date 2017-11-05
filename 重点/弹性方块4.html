@@ -21,11 +21,12 @@
     <script>
         window.addEventListener("load", function(event) {
             var bounce_box_button = document.querySelectorAll("div.take-box-here > button");
-
             for(var i=0, len=bounce_box_button.length; i<len; ++i) {
                 bounce_box_button[i].addEventListener("click", function(event) {
-                    if(buildBounceBox(event.target.parentNode)) {
-                        event.target.style.display = "none";
+                    var bounce_box = buildBounceBox();
+                    if(bounce_box !== false) {
+                        event.target.style.display = "none";console.log(bounce_box);
+                        event.target.parentNode.appendChild(bounce_box);
                     }
                 }, false);
             }

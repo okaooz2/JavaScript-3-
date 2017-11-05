@@ -1,13 +1,30 @@
 /***************************************************************************************************
  * 此函数作用为在特定位置添加一可互动的弹性方块盒子
- * 1. father_element位要在其内添加弹性方块盒子的元素
- * 2. 运行时，盒子和方块的尺度参数会有弹出框提示输入
- * 3. 弹出提示框时，若选择取消则不会建立盒子，并返回false;若填好信息后选择确认，则建立盒子并返回true
- * 4. 为保证视觉效果，请组合配套的css表单使用
+ * 1. 运行时，盒子和方块的尺度参数会有弹出框提示输入
+ * 2. 弹出提示框时，若选择取消则不会建立盒子，并返回false；若填好信息后选择确认，则建立盒子并返回盒子的元素
+ * 3. 为保证视觉效果，请组合配套的css表单使用，也可根据下面的元素结构自行设计或添加表单
+ * 
+ * 返回的盒子元素结构如下：
+ * <div class="bounce-box">
+        <div class="inner-panel">
+            <h1>方块个数为：<span>0</span></h1>
+            <button>碰撞不变色</button>
+            <button>碰撞变色</button>
+            <button>减少一个方块</button>
+            <button>移除全部方块</button>
+        </div>
+        <div class="inner-box">
+            <canvas>您的浏览器不支持canvas画布功能！</canvas>
+            <button>发射</button>
+            <button>发射</button>
+            <button>发射</button>
+            <button>发射</button>
+        </div>
+    </div>
  ***************************************************************************************************/
 
 
-function buildBounceBox(father_element) {
+function buildBounceBox() {
     //定义方块对象
     function Square(position_x, position_y) {
         this.position_x = position_x;
@@ -151,14 +168,15 @@ function buildBounceBox(father_element) {
 /*********************************************************************************************************/
 
     //根据用户输入初始化画布尺寸
-    if(canvas_size === null) {
+   var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 30");
+   if(canvas_size === null) {
         return false;
     }
 
     var box = document.createElement("div");
     box.className = "bounce-box";
     var canvas = document.createElement("canvas");
-    var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 30");
+    canvas.innerHTML = "您的浏览器支不持canvas画布功能！";
     var side_length = 0;
     (function() {
         var box_width = 0;
@@ -168,6 +186,7 @@ function buildBounceBox(father_element) {
         box_width = parseInt(canvas_size[0]);
         box_height = parseInt(canvas_size[1]);
         side_length = parseInt(canvas_size[2])
+        canvas_size = null;
        
         canvas.width = box_width;           //这里千万不要修改style.with和style.height的值
         canvas.height = box_height;
@@ -269,10 +288,9 @@ function buildBounceBox(father_element) {
     })();
 
     canvas = box.querySelector("canvas");    //也许是因为用innerHTML重写了html文档，原来的canvas不能访问正确的位置，这里重新选定canvas
-    father_element.appendChild(box);
     var context = canvas.getContext("2d");
     var bounce = new Bounce(side_length);
     bounce.bouncing();
 
-    return true;
+    return box;
 }
