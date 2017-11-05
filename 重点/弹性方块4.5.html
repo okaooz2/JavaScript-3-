@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹性方块4.5</title>
+    <link rel="stylesheet" href="css/弹性方块4.css">
+</head>
+<body>
+    <div class="take-box-here">
+            <button>打开盒子</button>
+    </div>
+
+
+
+    <script src="js/弹性方块4.5.js"></script>
+    <script>
+        window.addEventListener("load", function(event) {
+            var bounce_box_button = document.querySelectorAll("div.take-box-here > button");
+            for(var i=0, len=bounce_box_button.length; i<len; ++i) {
+                bounce_box_button[i].addEventListener("click", function(event) {
+                    var bounce_box = buildBounceBox();
+                    if(bounce_box !== false) {
+                        event.target.style.display = "none";
+                        event.target.parentNode.appendChild(bounce_box);
+                    }
+                }, false);
+            }
+        }, false);
+    </script>
+</body>
+</html>

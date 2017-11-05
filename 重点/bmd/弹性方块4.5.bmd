@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map name="弹性方块4.5" document_type="Blumind" editor_version="1.3.16.0">
+  <!--Create by Blumind, you can download it free from http://www.blumind.org/download-->
+  <info />
+  <layout>LOGIC_RIGHT</layout>
+  <attributes>
+    <item name="editor_show_sidebar">True</item>
+  </attributes>
+  <style>
+    <back_color>#C8E0D8</back_color>
+    <fore_color>Black</fore_color>
+    <line_color>Black</line_color>
+    <border_color>#489088</border_color>
+    <node_back_color>#88C0B8</node_back_color>
+    <node_fore_color>Black</node_fore_color>
+    <select_color>Navy</select_color>
+    <hover_color>Navy</hover_color>
+    <link_line_color>Navy</link_line_color>
+  </style>
+  <nodes>
+    <node text="盒子">
+      <style>
+        <back_color>Navy</back_color>
+        <fore_color>White</fore_color>
+        <border_color>#18B4C0</border_color>
+        <padding>12</padding>
+      </style>
+      <widgets>
+        <widget type="NOTES" align="Right" hyperlink="">
+          <description>设定弹球盒子通过函数来实现。
+函数不接受参数，初始化参数通过弹出框获取；
+函数返回建立好的弹球盒子元素，具体如下：
+&lt;div class="bounce-box"&gt;
+        &lt;div class="inner-panel"&gt;
+            &lt;h1&gt;方块个数为：&lt;span&gt;0&lt;/span&gt;&lt;/h1&gt;
+            &lt;button&gt;碰撞不变色&lt;/button&gt;
+            &lt;button&gt;碰撞变色&lt;/button&gt;
+            &lt;button&gt;减少一个方块&lt;/button&gt;
+            &lt;button&gt;移除全部方块&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="inner-box"&gt;
+            &lt;canvas&gt;您的浏览器不支持canvas画布功能！&lt;/canvas&gt;
+            &lt;button&gt;发射&lt;/button&gt;
+            &lt;button&gt;发射&lt;/button&gt;
+            &lt;button&gt;发射&lt;/button&gt;
+            &lt;button&gt;发射&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;</description>
+        </widget>
+      </widgets>
+      <nodes>
+        <node text="整体流程控制方法存储的对象">
+          <style>
+            <back_color>Red</back_color>
+          </style>
+          <nodes>
+            <node text="创建各级元素">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+              <nodes>
+                <node text="要顺带把存储参数的对象中，【用到的元素】部分属性赋值">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+            <node text="初始化界面的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="绑定各按钮事件">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="控制盒子循环流程的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+              <nodes>
+                <node text="循环更新方块和抹除方块">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+                <node text="不断检测是否发生碰撞">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+          </nodes>
+        </node>
+        <node text="存储参数的对象">
+          <style>
+            <back_color>Red</back_color>
+          </style>
+          <nodes>
+            <node text="不变的参数">
+              <style>
+                <back_color>Red</back_color>
+                <fore_color>Red</fore_color>
+                <border_color>Red</border_color>
+                <shape>3</shape>
+              </style>
+              <nodes>
+                <node text="画布的尺寸">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+                <node text="方块的尺寸">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+            <node text="变化的参数">
+              <style>
+                <back_color>Red</back_color>
+                <fore_color>Red</fore_color>
+                <shape>3</shape>
+              </style>
+              <nodes>
+                <node text="方块数量">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+                <node text="是否开启变色功能">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+                <node text="用到的元素">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+          </nodes>
+        </node>
+        <node text="方块集合的对象">
+          <style>
+            <back_color>Red</back_color>
+          </style>
+          <nodes>
+            <node text="单个方块对象">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+              <nodes>
+                <node text="方块当前位置坐标">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+                <node text="x方向运动标记">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+                <node text="y方向运动标记">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+            <node text="增加一个方块的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="减少一个方块的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="移除全部方块的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="处理方块运动的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="一次在画布上更新所有方块的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+              <nodes>
+                <node text="先抹干净画布，在作图">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+                <node text="要可以判断使用什么颜色">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+          </nodes>
+        </node>
+        <node text="处理碰撞事件的对象">
+          <style>
+            <back_color>Red</back_color>
+          </style>
+          <nodes>
+            <node text="处理方块与边界的碰撞的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="处理方块之间碰撞的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+          </nodes>
+        </node>
+      </nodes>
+    </node>
+  </nodes>
+</map>
