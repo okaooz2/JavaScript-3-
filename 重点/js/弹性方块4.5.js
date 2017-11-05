@@ -315,6 +315,7 @@ function buildBounceBox() {
             }
         }
     }
+
     /****************************************************************************/
     var process_control = new ProcessControl();
     var all_squares = new AllSquares();
@@ -327,7 +328,7 @@ function buildBounceBox() {
         return false;
     }
     process_control.dealWithButton(all_squares);       //为按键绑定事件
-    process_control.globalProcess(all_squares, deal_with_bounce);
+    process_control.globalProcess(all_squares, deal_with_bounce);   //让盒子自动循环运作
     
     return perameter_data.bounce_box;
 }
