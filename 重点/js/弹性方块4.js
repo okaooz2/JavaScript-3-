@@ -1,13 +1,13 @@
 /***************************************************************************************************
  * 此函数作用为在特定位置添加一可互动的弹性方块盒子
- * 1. 请在html文档要添加此盒子的地方建立一个空的div元素，并赋予类名"bounce-box"
- *  例：<div class="bounce-box"></div>
+ * 1. father_element位要在其内添加弹性方块盒子的元素
  * 2. 运行时，盒子和方块的尺度参数会有弹出框提示输入
- * 3. 为保证视觉效果，请组合配套的css表单使用
+ * 3. 弹出提示框时，若选择取消则不会建立盒子，并返回false;若填好信息后选择确认，则建立盒子并返回true
+ * 4. 为保证视觉效果，请组合配套的css表单使用
  ***************************************************************************************************/
 
 
-function buildBounceBox() {
+function buildBounceBox(father_element) {
     //定义方块对象
     function Square(position_x, position_y) {
         this.position_x = position_x;
@@ -17,23 +17,24 @@ function buildBounceBox() {
         this.is_removed = false;
     }
     Square.prototype = {
-        side_length: [0],
-        wall_right: [0],
-        wall_bottom: [0],
-        color_is_change: [false],
+        constructor: Square,
+        side_length: 0,
+        wall_right: 0,
+        wall_bottom: 0,
+        color_is_change: false,
 
         setProtoProperty: function(side_length, box_width, box_height) {
-            if(this.side_length[0] === 0) {
-                this.side_length[0] = side_length;
-                this.wall_right[0] = box_width - side_length;
-                this.wall_bottom[0] = box_height - side_length;
+            if(this.side_length === 0) {
+                Square.prototype.side_length = side_length;     //这里直接修改了原型
+                Square.prototype.wall_right = box_width - side_length;
+                Square.prototype.wall_bottom = box_height - side_length;
             }
         },
         moving: function(context) {
             var that = this;
             function _moving() {
                 return function() {
-                    context.clearRect(that.position_x, that.position_y, that.side_length[0], that.side_length[0]);
+                    context.clearRect(that.position_x, that.position_y, that.side_length, that.side_length);
 
                     if(that.is_removed) {
                         return false;
@@ -43,14 +44,14 @@ function buildBounceBox() {
                     if(that.position_x <= 0) {
                         that.x_flag = true;
                     }
-                    else if(that.position_x >= that.wall_right[0]) {
+                    else if(that.position_x >= that.wall_right) {
                         that.x_flag = false;
                     }
                     //设置y轴运动方向
                     if(that.position_y <= 0) {
                         that.y_flag = true;
                     }
-                    else if(that.position_y >= that.wall_bottom[0]) {
+                    else if(that.position_y >= that.wall_bottom) {
                         that.y_flag = false;
                     }
                     
@@ -60,8 +61,8 @@ function buildBounceBox() {
                     //画图
                     context.beginPath();
                     context.fillStyle = "red";
-                    context.fillRect(that.position_x, that.position_y, that.side_length[0], that.side_length[0]);
-                    if(that.color_is_change[0]) {
+                    context.fillRect(that.position_x, that.position_y, that.side_length, that.side_length);
+                    if(Square.prototype.color_is_change) {
                         if(that.x_flag && that.y_flag) {
                             context.fillStyle = "yellow";
                         }
@@ -150,50 +151,46 @@ function buildBounceBox() {
 /*********************************************************************************************************/
 
     //根据用户输入初始化画布尺寸
-    var box = document.querySelector("div.bounce-box");
+    if(canvas_size === null) {
+        return false;
+    }
+
+    var box = document.createElement("div");
+    box.className = "bounce-box";
     var canvas = document.createElement("canvas");
-    var box_width = 0;
-    var box_height = 0;
+    var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 30");
     var side_length = 0;
     (function() {
-        var canvas_size = prompt("请输入箱子大小和方块边长（中间用空格隔开）", "290 340 30");
-        if(canvas_size !== null) {
-            canvas_size = canvas_size.split(/ +/);      //这里正则表达式不需要用引号括起来
-            box_width = parseInt(canvas_size[0]);
-            box_height = parseInt(canvas_size[1]);
-            side_length = parseInt(canvas_size[2])
-        }
-        else {
-            box_width = 290;        //默认值
-            box_height = 340;
-            side_length = 30;
-        }
+        var box_width = 0;
+        var box_height = 0;
+        
+        canvas_size = canvas_size.split(/ +/);      //这里正则表达式不需要用引号括起来
+        box_width = parseInt(canvas_size[0]);
+        box_height = parseInt(canvas_size[1]);
+        side_length = parseInt(canvas_size[2])
+       
         canvas.width = box_width;           //这里千万不要修改style.with和style.height的值
         canvas.height = box_height;
     })();
 
     //创建各元素
     var inner_box = document.createElement("div");
+    inner_box.className = "inner-box";
     inner_box.appendChild(canvas);
     box.appendChild(inner_box);
     (function() {
-        var panel = document.createElement("div"); 
+        var panel = document.createElement("div");
+        panel.className = "inner-panel";
         panel.innerHTML = "<h1>方块个数为：<span>0</span></h1><button>碰撞不变色</button><button>碰撞变色</button><button>减少一个方块</button><button>移除全部方块</button>";
         inner_box.parentNode.insertBefore(panel, inner_box);
         var buttons = panel.querySelectorAll("button");
         var count = 0;
         var counter = panel.querySelector("span");
         buttons[0].addEventListener("click", function() {
-            if(typeof bounce.squares[0] === "undefined") {
-                return false;
-            }
-            bounce.squares[0].color_is_change[0] = false;
+            Square.prototype.color_is_change = false;
         }, false);
         buttons[1].addEventListener("click", function() {
-            if(typeof bounce.squares[0] === "undefined") {
-                return false;
-            }
-            bounce.squares[0].color_is_change[0] = true;
+            Square.prototype.color_is_change = true;
         }, false);
         buttons[2].addEventListener("click", removeOne, false);
         buttons[3].addEventListener("click", removeAll, false);
@@ -271,8 +268,11 @@ function buildBounceBox() {
         }
     })();
 
-    canvas = document.querySelector("div.bounce-box canvas");    //也许是因为用innerHTML重写了html文档，原来的canvas不能访问正确的位置，这里重新选定canvas
+    canvas = box.querySelector("canvas");    //也许是因为用innerHTML重写了html文档，原来的canvas不能访问正确的位置，这里重新选定canvas
+    father_element.appendChild(box);
     var context = canvas.getContext("2d");
     var bounce = new Bounce(side_length);
     bounce.bouncing();
+
+    return true;
 }

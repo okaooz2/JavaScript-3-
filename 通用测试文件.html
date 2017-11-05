@@ -28,7 +28,7 @@
 			this.aaa = 123;
 		}
 		Aaa.prototype = {
-			bbb: [555]
+			bbb: 555
 		}
 
 		one();
@@ -36,25 +36,12 @@
 			console.log("----------------------");
 
 			var a = new Aaa();
-			var b = new Aaa();
 			console.log(a.aaa);
-			console.log(b.aaa);
-			console.log(a.bbb[0]);
-			console.log(b.bbb[0]);
+			console.log(a.bbb);
 
-			a.aaa = 0;
-			a.bbb[0] = 1;
-			console.log("");
+			Aaa.prototype.bbb = 666;
 			console.log(a.aaa);
-			console.log(b.aaa);
-			console.log(a.bbb[0]);
-			console.log(b.bbb[0]);
-
-			a = b = null;
-			c = new Aaa();
-			console.log("");
-			console.log(c.aaa);
-			console.log(c.bbb[0]);
+			console.log(a.bbb);
 		}
 		
 		tow();
@@ -62,26 +49,9 @@
 			console.log("----------------------");
 
 			var a = new Aaa();
-			var b = new Aaa();
 			console.log(a.aaa);
-			console.log(b.aaa);
-			console.log(a.bbb[0]);
-			console.log(b.bbb[0]);
-
-			a.aaa = 0;
-			a.bbb[0] = 1;
-			console.log("");
-			console.log(a.aaa);
-			console.log(b.aaa);
-			console.log(a.bbb[0]);
-			console.log(b.bbb[0]);
-
-			a = b = null;
-			c = new Aaa();
-			console.log("");
-			console.log(c.aaa);
-			console.log(c.bbb[0]);
-		}	
+			console.log(a.bbb);
+		}
 		
 	</script>
 	<script>
