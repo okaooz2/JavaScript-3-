@@ -77,25 +77,31 @@ function buildBounceBox() {
             for(var i=0, len=buttons.length; i<len; ++i) {
                 switch(i) {
                     case 0: 
-                        buttons[i].style = "left: 0; bottom: 100%;";
+                        buttons[i].style.left = 0;
+                        buttons[i].style.bottom = "100%";
                         buttons[i].addEventListener("click", function(event) {
                             all_squares.addOneSquare(0, 0);
                         }, false);
                         break;
                      case 1: 
-                        buttons[i].style = "right: 0; bottom: 100%;";
+                        buttons[i].style.right = 0;
+                        buttons[i].style.bottom = "100%";
                         buttons[i].addEventListener("click", function(event) {
                             all_squares.addOneSquare(perameter_data.canvas_width - perameter_data.side_length, 0);
                         }, false);
                         break;
                     case 2: 
-                        buttons[i].style = "right: 0; top: 100%; transform: translate(0, -4px);";  // //不知道为什么画布的父元素在y方向上多出了一点不能包围画布，故做一个平移。下同
+                        buttons[i].style.left = 0;
+                        buttons[i].style.top = "100%";
+                        buttons[i].style.transform = "translate(0, -4px)";  //不知道为什么画布的父元素在y方向上多出了一点不能包围画布，故做一个平移。下同
                         buttons[i].addEventListener("click", function(event) {
                             all_squares.addOneSquare(perameter_data.canvas_width - perameter_data.side_length, perameter_data.canvas_height - perameter_data.side_length);
                         }, false);
                         break;
                      case 3: 
-                        buttons[i].style = "left: 0; top: 100%; transform: translate(0, -4px);";
+                        buttons[i].style.right = 0;
+                        buttons[i].style.top = "100%";
+                        buttons[i].style.transform = "translate(0, -4px)";
                         buttons[i].addEventListener("click", function(event) {
                             all_squares.addOneSquare(0, perameter_data.canvas_height - perameter_data.side_length);
                         }, false);
