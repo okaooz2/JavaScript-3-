@@ -24,7 +24,7 @@
             for(var i=0, len=bounce_box_button.length; i<len; ++i) {
                 bounce_box_button[i].addEventListener("click", function(event) {
                     var bounce_box = buildBounceBox();
-                    if(bounce_box !== false) {
+                    if(bounce_box !== null) {
                         event.target.style.display = "none";
                         event.target.parentNode.appendChild(bounce_box);
                     }
