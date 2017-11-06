@@ -91,7 +91,7 @@ function buildBounceBox() {
                         }, false);
                         break;
                     case 2: 
-                        buttons[i].style.left = 0;
+                        buttons[i].style.right = 0;
                         buttons[i].style.top = "100%";
                         buttons[i].style.transform = "translate(0, -4px)";  //不知道为什么画布的父元素在y方向上多出了一点不能包围画布，故做一个平移。下同
                         buttons[i].addEventListener("click", function(event) {
@@ -99,7 +99,7 @@ function buildBounceBox() {
                         }, false);
                         break;
                      case 3: 
-                        buttons[i].style.right = 0;
+                        buttons[i].style.left = 0;
                         buttons[i].style.top = "100%";
                         buttons[i].style.transform = "translate(0, -4px)";
                         buttons[i].addEventListener("click", function(event) {
