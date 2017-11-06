@@ -327,7 +327,6 @@ function buildBounceBox() {
     if(!process_control.getInputData()) {       //获取用户输入
         return false;
     }
-    
     var all_squares = new AllSquares();
     var deal_with_bounce = new DealWithBounce();
 
