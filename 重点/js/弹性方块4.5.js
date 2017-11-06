@@ -135,9 +135,7 @@ function buildBounceBox() {
         globalProcess: function(all_squares, dealWith_bounce) {
             function _globalProcess() {
                 //更新方块和抹除方块（这里顺序不要乱，不然效果会不好）
-                for(var i=0, len=all_squares.squares.length; i<len; ++i) {
-                    dealWith_bounce.bounceWithWall(all_squares.squares[i]);
-                }
+                dealWith_bounce.bounceWithWall(all_squares.squares);
                 dealWith_bounce.bounceWithAnother(all_squares.squares);
                 all_squares.moveSquares();
                 all_squares.drawAllSquares();
@@ -260,20 +258,22 @@ function buildBounceBox() {
     function DealWithBounce() {
     }
     DealWithBounce.prototype = {
-        //处理方块与边界的碰撞的方法--->传入单个方块对象；无返回值
-        bounceWithWall: function(square) {
-            if(square.position_x <= 0) {
-                square.speedX_flag = true;
-            }
-            else if(square.position_x >= perameter_data.canvas_width - perameter_data.side_length) {
-                square.speedX_flag = false;
-            }
+        //处理方块与边界的碰撞的方法--->传入全部方块的集合（数组）；无返回值
+        bounceWithWall: function(squares) {
+            for(var i=0, len=squares.length; i<len; ++i) {
+                if(squares[i].position_x <= 0) {
+                    squares[i].speedX_flag = true;
+                }
+                else if(squares[i].position_x >= perameter_data.canvas_width - perameter_data.side_length) {
+                    squares[i].speedX_flag = false;
+                }
 
-            if(square.position_y <= 0) {
-                square.speedY_flag = true;
-            }
-            else if(square.position_y >= perameter_data.canvas_height - perameter_data.side_length) {
-                square.speedY_flag = false;
+                if(squares[i].position_y <= 0) {
+                    squares[i].speedY_flag = true;
+                }
+                else if(squares[i].position_y >= perameter_data.canvas_height - perameter_data.side_length) {
+                    squares[i].speedY_flag = false;
+                }
             }
         },
         //处理方块之间碰撞的方法--->传入全部方块的集合（数组）；无返回值
