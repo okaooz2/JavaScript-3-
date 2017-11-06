@@ -33,15 +33,26 @@ function buildBounceBox() {
     ProcessControl.prototype = {
         //获取用户输入参数的方法--->若用户取消输入则返回false，接受数据成功则返回true
         getInputData: function() {
-            var size_data = prompt("请输入画布的宽高和方块的边长（中间用空格隔开）", "290 340 30");
-            if(size_data === null) {
-                return false;
-            }
+            do {
+                var size_data = prompt("请输入画布的宽高和方块的边长（中间用空格隔开）", "290 340 30");
+                if(size_data === null) {
+                    return false;
+                }
 
-            size_data = size_data.split(/ +/);
-            perameter_data.canvas_width = parseInt(size_data[0]);
-            perameter_data.canvas_height = parseInt(size_data[1]);
-            perameter_data.side_length = parseInt(size_data[2]);
+                var is_to_big = false;
+                size_data = size_data.split(/ +/);
+                for(var i=0, len=size_data.length; i<len; ++i) {
+                    size_data[i] = parseInt(size_data[i]);
+                }
+                if(size_data[2] >= size_data[0] || size_data[2] >= size_data[1]) {
+                    alert("你输入的方块边长过大，请再次输入");
+                    is_to_big = true;
+                }
+            }while(is_to_big);
+
+            perameter_data.canvas_width = size_data[0];
+            perameter_data.canvas_height = size_data[1];
+            perameter_data.side_length = size_data[2];
 
             return true;
         },
