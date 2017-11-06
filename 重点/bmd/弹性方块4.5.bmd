@@ -55,9 +55,13 @@
           </style>
           <nodes>
             <node text="获取用户输入参数的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
               <nodes>
                 <node text="若用户取消输入，则不再创建盒子">
                   <style>
+                    <fore_color>Red</fore_color>
                     <shape>3</shape>
                   </style>
                 </node>
@@ -130,6 +134,11 @@
                     <back_color>Red</back_color>
                   </style>
                 </node>
+                <node text="用到的元素">
+                  <style>
+                    <back_color>Red</back_color>
+                  </style>
+                </node>
               </nodes>
             </node>
             <node text="变化的参数">
@@ -145,11 +154,6 @@
                   </style>
                 </node>
                 <node text="是否开启变色功能">
-                  <style>
-                    <back_color>Red</back_color>
-                  </style>
-                </node>
-                <node text="用到的元素">
                   <style>
                     <back_color>Red</back_color>
                   </style>
