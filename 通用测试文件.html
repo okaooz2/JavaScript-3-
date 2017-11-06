@@ -24,35 +24,11 @@
 
 	
 	<script>
-		function Aaa() {
-			this.aaa = 123;
+		function aaa() {
+			bbb = {
+				ccc: 666
+			};
 		}
-		Aaa.prototype = {
-			bbb: 555
-		}
-
-		one();
-		function one() {
-			console.log("----------------------");
-
-			var a = new Aaa();
-			console.log(a.aaa);
-			console.log(a.bbb);
-
-			Aaa.prototype.bbb = 666;
-			console.log(a.aaa);
-			console.log(a.bbb);
-		}
-		
-		tow();
-		function tow() {
-			console.log("----------------------");
-
-			var a = new Aaa();
-			console.log(a.aaa);
-			console.log(a.bbb);
-		}
-		
 	</script>
 	<script>
 		function displayProperties(object) {

@@ -31,7 +31,21 @@ function buildBounceBox() {
     function ProcessControl() {
     }
     ProcessControl.prototype = {
-        //创建各级元素并添加进文档的方法--->无返回值
+        //获取用户输入参数的方法--->若用户取消输入则返回false，接受数据成功则返回true
+        getInputData: function() {
+            var size_data = prompt("请输入画布的宽高和方块的边长（中间用空格隔开）", "290 340 30");
+            if(size_data === null) {
+                return false;
+            }
+
+            size_data = size_data.split(/ +/);
+            perameter_data.canvas_width = parseInt(size_data[0]);
+            perameter_data.canvas_height = parseInt(size_data[1]);
+            perameter_data.side_length = parseInt(size_data[2]);
+
+            return true;
+        },
+        //创建各级元素的方法--->无返回值
         setElement: function() {
             var bounce_box = document.createElement("div");
             bounce_box.className = "bounce-box";
@@ -46,39 +60,16 @@ function buildBounceBox() {
             inner_box.innerHTML = "<canvas>您的浏览器不支持canvas画布功能！</canvas><button>发射</button><button>发射</button><button>发射</button><button>发射</button>";
             bounce_box.appendChild(inner_box)
 
+            //要顺带把存储参数的对象中，【用到的元素】部分属性赋值
             perameter_data.bounce_box = bounce_box;
             perameter_data.canvas = inner_box.querySelector("canvas");
             perameter_data.context = perameter_data.canvas.getContext("2d");
             perameter_data.counter = inner_panel.querySelector("span");
         },   
-        //初始化界面的方法--->初始化成功返回true，失败返回false
+        //初始化界面的方法--->无返回值
         initializeInterface: function() {
-            var size_data = prompt("请输入画布的宽高和方块的边长（中间用空格隔开）", "290 340 30");
-            if(size_data === null) {
-                return false;
-            }
-
-            size_data = size_data.split(/ +/);
-            perameter_data.canvas.width = perameter_data.canvas_width = parseInt(size_data[0]);
-            perameter_data.canvas.height = perameter_data.canvas_height = parseInt(size_data[1]);
-            perameter_data.side_length = parseInt(size_data[2]);
-
-            return true;
-        },
-        //控制盒子循环流程的方法--->接受方块集合对象，处理碰撞事件对象；无返回值；自循环
-        globalProcess: function(all_squares, dealWith_bounce) {
-            function _globalProcess() {
-                //更新方块和抹除方块
-                all_squares.moveSquares();
-                for(var i=0, len=all_squares.squares.length; i<len; ++i) {
-                    dealWith_bounce.bounceWithWall(all_squares.squares[i]);
-                }
-                dealWith_bounce.bounceWithAnother(all_squares.squares);
-                all_squares.drawAllSquares();
-
-                requestAnimationFrame(_globalProcess);
-            }
-            requestAnimationFrame(_globalProcess);
+            perameter_data.canvas.width = perameter_data.canvas_width;
+            perameter_data.canvas.height = perameter_data.canvas_height;
         },
         //绑定各按钮事件--->接受方块集合对象；无返回值
         dealWithButton: function(all_squares) {
@@ -94,19 +85,19 @@ function buildBounceBox() {
                      case 1: 
                         buttons[i].style = "right: 0; bottom: 100%;";
                         buttons[i].addEventListener("click", function(event) {
-                            all_squares.addOneSquare(perameter_data.canvas_width-perameter_data.side_length, 0);
+                            all_squares.addOneSquare(perameter_data.canvas_width - perameter_data.side_length, 0);
                         }, false);
                         break;
                     case 2: 
                         buttons[i].style = "right: 0; top: 100%;";
                         buttons[i].addEventListener("click", function(event) {
-                            all_squares.addOneSquare(perameter_data.canvas_width-perameter_data.side_length, perameter_data.canvas_height-perameter_data.side_length);
+                            all_squares.addOneSquare(perameter_data.canvas_width - perameter_data.side_length, perameter_data.canvas_height - perameter_data.side_length);
                         }, false);
                         break;
                      case 3: 
                         buttons[i].style = "left: 0; top: 100%;";
                         buttons[i].addEventListener("click", function(event) {
-                            all_squares.addOneSquare(0, perameter_data.canvas_height-perameter_data.side_length);
+                            all_squares.addOneSquare(0, perameter_data.canvas_height - perameter_data.side_length);
                         }, false);
                         break;
                     default: break;
@@ -139,13 +130,28 @@ function buildBounceBox() {
                     default: break;
                 }
             }
+        },
+        //控制盒子循环流程的方法--->接受方块集合对象，处理碰撞事件对象；无返回值；自循环
+        globalProcess: function(all_squares, dealWith_bounce) {
+            function _globalProcess() {
+                //更新方块和抹除方块（这里顺序不要乱，不然效果会不好）
+                for(var i=0, len=all_squares.squares.length; i<len; ++i) {
+                    dealWith_bounce.bounceWithWall(all_squares.squares[i]);
+                }
+                dealWith_bounce.bounceWithAnother(all_squares.squares);
+                all_squares.moveSquares();
+                all_squares.drawAllSquares();
+
+                requestAnimationFrame(_globalProcess);
+            }
+            requestAnimationFrame(_globalProcess);
         }
     }
 
     /************************
      * 存储参数的对象
      * **********************/
-    perameter_data = {
+    var perameter_data = {
         //不变的参数
         canvas_width: 0,
         canvas_height: 0,
@@ -160,7 +166,7 @@ function buildBounceBox() {
         context: null,
         bounce_box: null,
         counter: null
-    }
+    };
 
     /***********************
      * 单个方块对象
@@ -270,7 +276,7 @@ function buildBounceBox() {
                 square.speedY_flag = false;
             }
         },
-        //处理方块之间碰撞的方法--->传入前部方块的集合（数组）；无返回值
+        //处理方块之间碰撞的方法--->传入全部方块的集合（数组）；无返回值
         bounceWithAnother: function(squares) {
             for(var i=0, len=squares.length; i<len; ++i) {
                 for(var j=i+1; j<len; ++j) {
@@ -318,17 +324,17 @@ function buildBounceBox() {
 
     /****************************************************************************/
     var process_control = new ProcessControl();
+    if(!process_control.getInputData()) {       //获取用户输入
+        return false;
+    }
+    
     var all_squares = new AllSquares();
     var deal_with_bounce = new DealWithBounce();
 
     process_control.setElement();      //创建了元素
-    
-
-     if(!process_control.initializeInterface()) {   //为元素（canvas元素）设置宽度
-        return false;
-    }
+    process_control.initializeInterface();      //为元素（canvas元素）设置宽度
     process_control.dealWithButton(all_squares);       //为按键绑定事件
     process_control.globalProcess(all_squares, deal_with_bounce);   //让盒子自动循环运作
-    
+
     return perameter_data.bounce_box;
 }

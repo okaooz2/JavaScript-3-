@@ -54,6 +54,15 @@
             <back_color>Red</back_color>
           </style>
           <nodes>
+            <node text="获取用户输入参数的方法">
+              <nodes>
+                <node text="若用户取消输入，则不再创建盒子">
+                  <style>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
+            </node>
             <node text="创建各级元素">
               <style>
                 <back_color>Red</back_color>
