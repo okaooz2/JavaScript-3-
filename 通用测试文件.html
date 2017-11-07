@@ -17,24 +17,20 @@
 	</style>
 </head>
 <body>
-	<button id="my-btn">Click me!</button>
+	<form action="#" class="my-form">
+		<input type="submit" value="这是input按钮">
+		<button type="submit">这是button按钮</button>
+		<input type="image" src="./image/jpg_1.jpg">
+	</form>
 	
 
 	
 	<script>
-		var my_btn = document.querySelector("button#my-btn");
-		console.log(my_btn.onclick);
-
-		// my_btn.onclick = function() {
-		// 	alert("hellow");
-		// }
-		my_btn.addEventListener("click", function(event) {
-			alert("hellow");
+		var my_form = document.querySelector("form.my-form");
+		
+		my_form.addEventListener("submit", function(event) {
+			console.log("submit事件被触发，表单被提交");
 		}, false);
-		console.log(my_btn.onclick);
-
-		my_btn.onclick = null;
-		console.log(my_btn.onclick);
 	</script>
 	<script>
 		function displayProperties(object) {

@@ -39,7 +39,7 @@ function buildBounceBox() {
         wall_right: 0,
         wall_bottom: 0,
         color_is_change: false,
-
+                
         setProtoProperty: function(side_length, box_width, box_height) {
             if(this.side_length === 0) {
                 Square.prototype.side_length = side_length;     //这里直接修改了原型
@@ -126,7 +126,7 @@ function buildBounceBox() {
                             var _y = that.squares[j].position_y - that.squares[i].position_y;
                             var delta_x = Math.abs(_x);
                             var delta_y = Math.abs(_y);
-                           
+
                             if(delta_x <= that.side_length && delta_y <= that.side_length) {
                                 //x方向碰撞
                                 if(delta_x > delta_y) {      
@@ -272,6 +272,7 @@ function buildBounceBox() {
                 return false;
             }
 
+            
             bounce.squares.shift().is_removed = true;
             counter.firstChild.nodeValue = --count;
         }
