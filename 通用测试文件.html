@@ -17,21 +17,24 @@
 	</style>
 </head>
 <body>
-	<p>6666</p>
-	<p class="board"></p>
-	<p class="board"></p>
+	<button id="my-btn">Click me!</button>
 	
 
 	
 	<script>
-		function add(a, b) {
-			return a + b;
-		}
+		var my_btn = document.querySelector("button#my-btn");
+		console.log(my_btn.onclick);
 
-		var aaa = 333;
-		console.log(add(1, aaa));
+		// my_btn.onclick = function() {
+		// 	alert("hellow");
+		// }
+		my_btn.addEventListener("click", function(event) {
+			alert("hellow");
+		}, false);
+		console.log(my_btn.onclick);
 
-		
+		my_btn.onclick = null;
+		console.log(my_btn.onclick);
 	</script>
 	<script>
 		function displayProperties(object) {
