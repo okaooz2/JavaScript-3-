@@ -18,19 +18,63 @@
 </head>
 <body>
 	<form action="#" class="my-form">
-		<input type="submit" value="这是input按钮">
-		<button type="submit">这是button按钮</button>
+		<input type="submit" value="这是input发送按钮" autofocus>
+		<button type="submit">这是button发送按钮</button>
 		<input type="image" src="./image/jpg_1.jpg">
+		<input type="reset" value="这是input重置按钮">
+		<button type="reset">这是button重置按钮</button>
+
+		<br>
+		<input type="text">
 	</form>
 	
 
 	
 	<script>
 		var my_form = document.querySelector("form.my-form");
-		
+		my_form.addEventListener("click", function(event) {
+			console.log("onclick事件被触发");
+		}, false);
 		my_form.addEventListener("submit", function(event) {
 			console.log("submit事件被触发，表单被提交");
 		}, false);
+		my_form.addEventListener("reset", function() {
+			console.log("reset事件被触发，表单被重置");
+		}, false);
+
+		// var button_1 = my_form.querySelector("button");
+		// console.log(my_form === button_1.form);		//true
+		// console.log(button_1.name);
+		// console.log(button_1.type);
+
+		var text_box = my_form.querySelector("input[type='text']");
+		//绑定focus事件
+		text_box.addEventListener("focus", function(event) {
+			event.target.style.backgroundColor = "yellow";
+		}, false);
+		//绑定change事件
+		text_box.addEventListener("change", function(event) {
+			console.log("change事件被触发");
+		}, false);
+		//绑定blur事件
+		text_box.addEventListener("blur", function(event) {
+			if(/[\D]/.test(event.target.value)) {
+				event.target.style.backgroundColor = "red";
+			}
+			else {
+				event.target.style.backgroundColor = "";
+			}
+		}, false);
+
+
+		function insertAfter(insert_element, target_element) {
+			if(target_element === target_element.parentNode.lastChild) {
+				target_element.parentNode.appendChild(insert_element);
+			}
+			else {
+				target_element.parentNode.insertBefore(insert_element, target_element.nextSibling);
+			}
+		}
 	</script>
 	<script>
 		function displayProperties(object) {
