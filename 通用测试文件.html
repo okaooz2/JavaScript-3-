@@ -17,7 +17,7 @@
 	</style>
 </head>
 <body>
-	<form action="#" class="my-form">
+	<form action="#" class="my-form" name="my-form">
 		<input type="submit" value="这是input发送按钮" autofocus>
 		<button type="submit">这是button发送按钮</button>
 		<input type="image" src="./image/jpg_1.jpg">
@@ -25,22 +25,24 @@
 		<button type="reset">这是button重置按钮</button>
 
 		<br>
-		<input type="text">
+		<input type="text" value="hellow" size="10" maxlength="5">
+		<br>
+		<textarea name="textarea_1" id="" cols="10" rows="5">hellow</textarea>
 	</form>
 	
 
 	
 	<script>
 		var my_form = document.querySelector("form.my-form");
-		my_form.addEventListener("click", function(event) {
-			console.log("onclick事件被触发");
-		}, false);
-		my_form.addEventListener("submit", function(event) {
-			console.log("submit事件被触发，表单被提交");
-		}, false);
-		my_form.addEventListener("reset", function() {
-			console.log("reset事件被触发，表单被重置");
-		}, false);
+		// my_form.addEventListener("click", function(event) {
+		// 	console.log("onclick事件被触发");
+		// }, false);
+		// my_form.addEventListener("submit", function(event) {
+		// 	console.losg("submit事件被触发，表单被提交");
+		// }, false);
+		// my_form.addEventListener("reset", function() {
+		// 	console.log("reset事件被触发，表单被重置");
+		// }, false);
 
 		// var button_1 = my_form.querySelector("button");
 		// console.log(my_form === button_1.form);		//true
@@ -77,6 +79,25 @@
 				event.target.is_ok = true;
 			}
 		}, false);
+
+		var textarea_1 = document.forms["my-form"].elements["textarea_1"];
+		// console.log(textarea_1);
+		// console.log(textarea_1.value);
+		// textarea_1.addEventListener("focus", function(event) {
+			
+		// }, false);
+		textarea_1.addEventListener("keypress", function(event) {
+			var char = String.fromCharCode(event.charCode);
+			if(/[\D]/.test(char)) {
+				console.log("你输入了非数字字符");
+				event.preventDefault();
+			}
+		}, false);
+		// textarea_1.addEventListener("select", function(event) {
+		// 	console.log("select事件被触发");
+		// 	var select_text = event.target.value.substring(event.target.selectionStart, event.selectionEnd);
+		// 	console.log(select_text);
+		// }, false);
 
 
 		function insertAfter(insert_element, target_element) {
