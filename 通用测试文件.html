@@ -17,98 +17,67 @@
 	</style>
 </head>
 <body>
-	<form action="#" class="my-form" name="my-form">
-		<input type="submit" value="这是input发送按钮" autofocus>
-		<button type="submit">这是button发送按钮</button>
-		<input type="image" src="./image/jpg_1.jpg">
-		<input type="reset" value="这是input重置按钮">
-		<button type="reset">这是button重置按钮</button>
+	<p class="my-p">
+		朱厌<br>
+		朱厌是古代中国神话传说中的凶兽，身形像猿猴，白头红脚，传说这种野兽一出现，天下就会发生大战争，出自《山海经·西山经》。<br>
+		朱厌，一种古代凶兽，出于小次山。据《山海经·西山经》记载：“又西四百里，曰小次之山，其上多白玉，其下多赤铜。有兽焉，其状如猿，而白首赤足，名曰朱厌，见则大兵。”<br>
+		朱厌即猿，它有洁净的毛发（白首：白，彰明、清晰、洁净；首，标表），伺机奔跑（赤足：赤，斥候，侦察。足，奔跑）。[2]  朱厌图有二形：其一为猴形；其二为人面猴身。郭璞《图赞》：“凫篌朱厌，见则有兵。类异感同，理不虚行。惟之自然，厥数难明。”<br>
+		朱厌为凶兽，与凫篌一样，都是兵燹的征兆。据传说这种野兽一出现，天下就会发生大战争。<br>
+	</p>
 
-		<br>
-		<input type="text" value="hellow" size="10" maxlength="5">
-		<br>
-		<textarea name="textarea_1" id="" cols="10" rows="5">hellow</textarea>
+	<input type="password" class="password-box">
+	<br><br>
+
+	<form action="#" name="test-form">
+		<input type="text">
+		<input type="text">
+		<input type="text">
+		<input type="email">
+		<input type="text" placeholder="只能输入数字" pattern="\d+" required>
+		<button type="submit">发送</button>
 	</form>
 	
 
 	
 	<script>
-		var my_form = document.querySelector("form.my-form");
-		// my_form.addEventListener("click", function(event) {
-		// 	console.log("onclick事件被触发");
-		// }, false);
-		// my_form.addEventListener("submit", function(event) {
-		// 	console.losg("submit事件被触发，表单被提交");
-		// }, false);
-		// my_form.addEventListener("reset", function() {
-		// 	console.log("reset事件被触发，表单被重置");
-		// }, false);
-
-		// var button_1 = my_form.querySelector("button");
-		// console.log(my_form === button_1.form);		//true
-		// console.log(button_1.name);
-		// console.log(button_1.type);
-
-		var text_box = my_form.querySelector("input[type='text']");
-		text_box.is_ok = false;
-		//绑定focus事件
-		text_box.addEventListener("focus", function(event) {
-			if(event.target.is_ok || event.target.style.backgroundColor === "red") {
-				event.target.parentNode.removeChild(event.target.nextSibling);
-			}
-			event.target.style.backgroundColor = "yellow";
-		}, false);
-		//绑定change事件
-		text_box.addEventListener("change", function(event) {
-			console.log("change事件被触发");
-		}, false);
-		//绑定blur事件
-		text_box.addEventListener("blur", function(event) {
-			if(event.target.value === "") {
-				event.target.style.backgroundColor = "";
-				event.target.is_ok = false;
-			}
-			else if(/[\D]/.test(event.target.value)) {
-				event.target.style.backgroundColor = "red";
-				insertAfter(document.createTextNode("× ---> 提示：只能输入数字"), event.target);
-				event.target.is_ok = false;
-			}
-			else {
-				insertAfter(document.createTextNode("√"), event.target);
-				event.target.style.backgroundColor = "";
-				event.target.is_ok = true;
-			}
+		var my_p = document.querySelector("p.my-p");
+		my_p.addEventListener("copy", function(event) {
+			console.log("copy事件被执行");
+			event.preventDefault();		//ok
+			alert("本文章不允许复制！");
 		}, false);
 
-		var textarea_1 = document.forms["my-form"].elements["textarea_1"];
-		// console.log(textarea_1);
-		// console.log(textarea_1.value);
-		// textarea_1.addEventListener("focus", function(event) {
-			
-		// }, false);
-		textarea_1.addEventListener("keypress", function(event) {
-			var char = String.fromCharCode(event.charCode);
-			if(/[\D]/.test(char) && event.charCode > 9) {
-				console.log("你输入了非数字字符");
-				event.preventDefault();
+		var password_box = document.querySelector("input.password-box");
+		password_box.addEventListener("paste", function(event) {
+			event.preventDefault();
+			alert("请不要粘贴密码！");
+		}, false);
+
+		var form = document.forms["test-form"];
+		//事件委托
+		form.addEventListener("keyup", function(event) {
+			var form_elements = event.target.form.elements;
+			if(event.keyCode === 13) {
+				for(var i=0, len=form_elements.length; i<len; ++i) {
+					if(form_elements[i] === event.target) {
+						form_elements[i+1] ? (form_elements[i+1].focus()) : null;
+						return ;
+					}
+				}
 			}
 		}, false);
-		// textarea_1.addEventListener("select", function(event) {
-		// 	console.log("select事件被触发");
-		// 	var select_text = event.target.value.substring(event.target.selectionStart, event.selectionEnd);
-		// 	console.log(select_text);
+		// form.addEventListener("submit", function(event) {
+		// 	console.log("submit事件被触发");
+		// 	// var elements = event.target.form.elements;
+		// 	var elements = this.elements;
+		// 	for(var i=0, len=elements.length; i<len; ++i) {
+		// 		if(elements[i].checkValidity()) {
+		// 			console.log(i + "号字段无效");
+		// 		}
+		// 	}
 		// }, false);
-
-
-		function insertAfter(insert_element, target_element) {
-			if(target_element === target_element.parentNode.lastChild) {
-				target_element.parentNode.appendChild(insert_element);
-			}
-			else {
-				target_element.parentNode.insertBefore(insert_element, target_element.nextSibling);
-			}
-		}
 	</script>
+
 	<script>
 		function displayProperties(object) {
 			var counter_functions = 0;
