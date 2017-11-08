@@ -48,8 +48,12 @@
 		// console.log(button_1.type);
 
 		var text_box = my_form.querySelector("input[type='text']");
+		text_box.is_ok = false;
 		//绑定focus事件
 		text_box.addEventListener("focus", function(event) {
+			if(event.target.is_ok || event.target.style.backgroundColor === "red") {
+				event.target.parentNode.removeChild(event.target.nextSibling);
+			}
 			event.target.style.backgroundColor = "yellow";
 		}, false);
 		//绑定change事件
@@ -58,11 +62,18 @@
 		}, false);
 		//绑定blur事件
 		text_box.addEventListener("blur", function(event) {
-			if(/[\D]/.test(event.target.value)) {
+			if(event.target.value === "") {
+				event.target.style.backgroundColor = "";
+				event.target.is_ok = false;
+			}
+			else if(/[\D]/.test(event.target.value)) {
 				event.target.style.backgroundColor = "red";
+				insertAfter(document.createTextNode("× ---> 提示：只能输入数字"), event.target);
+				event.target.is_ok = false;
 			}
 			else {
-				event.target.style.backgroundColor = "";
+				insertAfter(document.createTextNode("√"), event.target);
+				event.target.is_ok = true;
 			}
 		}, false);
 
