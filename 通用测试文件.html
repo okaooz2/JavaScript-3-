@@ -73,6 +73,7 @@
 			}
 			else {
 				insertAfter(document.createTextNode("√"), event.target);
+				event.target.style.backgroundColor = "";
 				event.target.is_ok = true;
 			}
 		}, false);
