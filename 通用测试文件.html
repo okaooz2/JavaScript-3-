@@ -88,7 +88,7 @@
 		// }, false);
 		textarea_1.addEventListener("keypress", function(event) {
 			var char = String.fromCharCode(event.charCode);
-			if(/[\D]/.test(char)) {
+			if(/[\D]/.test(char) && event.charCode > 9) {
 				console.log("你输入了非数字字符");
 				event.preventDefault();
 			}
