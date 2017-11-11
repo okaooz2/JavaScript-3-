@@ -5,103 +5,53 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>通用测试文件</title>
-	<script>
-		var time_count_start = +new Date();
-	</script>
 	<style>
 		body {
 			overflow: hidden;
 			height: 100vh;
 			background-color: #f3f57d;
 		}
+		canvas {
+			background-color: white;
+			border: 1px solid black;
+		}
 	</style>
 </head>
 <body>
-	<p class="my-p">
-		朱厌<br>
-		朱厌是古代中国神话传说中的凶兽，身形像猿猴，白头红脚，传说这种野兽一出现，天下就会发生大战争，出自《山海经·西山经》。<br>
-		朱厌，一种古代凶兽，出于小次山。据《山海经·西山经》记载：“又西四百里，曰小次之山，其上多白玉，其下多赤铜。有兽焉，其状如猿，而白首赤足，名曰朱厌，见则大兵。”<br>
-		朱厌即猿，它有洁净的毛发（白首：白，彰明、清晰、洁净；首，标表），伺机奔跑（赤足：赤，斥候，侦察。足，奔跑）。[2]  朱厌图有二形：其一为猴形；其二为人面猴身。郭璞《图赞》：“凫篌朱厌，见则有兵。类异感同，理不虚行。惟之自然，厥数难明。”<br>
-		朱厌为凶兽，与凫篌一样，都是兵燹的征兆。据传说这种野兽一出现，天下就会发生大战争。<br>
-	</p>
+	<canvas width="300" height="300">你的浏览器布置canvas画布功能！</canvas>
 
-	<input type="password" class="password-box">
-	<br><br>
-
-	<form action="#" name="test-form">
-		<input type="text">
-		<input type="text">
-		<input type="text">
-		<input type="email">
-		<input type="text" placeholder="只能输入数字" pattern="\d+" required>
-		<button type="submit">发送</button>
-	</form>
-	
-
-	
-	<script>
-		var my_p = document.querySelector("p.my-p");
-		my_p.addEventListener("copy", function(event) {
-			console.log("copy事件被执行");
-			event.preventDefault();		//ok
-			alert("本文章不允许复制！");
-		}, false);
-
-		var password_box = document.querySelector("input.password-box");
-		password_box.addEventListener("paste", function(event) {
-			event.preventDefault();
-			alert("请不要粘贴密码！");
-		}, false);
-
-		var form = document.forms["test-form"];
-		//事件委托
-		form.addEventListener("keyup", function(event) {
-			var form_elements = event.target.form.elements;
-			if(event.keyCode === 13) {
-				for(var i=0, len=form_elements.length; i<len; ++i) {
-					if(form_elements[i] === event.target) {
-						form_elements[i+1] ? (form_elements[i+1].focus()) : null;
-						return ;
-					}
-				}
-			}
-		}, false);
-		// form.addEventListener("submit", function(event) {
-		// 	console.log("submit事件被触发");
-		// 	// var elements = event.target.form.elements;
-		// 	var elements = this.elements;
-		// 	for(var i=0, len=elements.length; i<len; ++i) {
-		// 		if(elements[i].checkValidity()) {
-		// 			console.log(i + "号字段无效");
-		// 		}
-		// 	}
-		// }, false);
-	</script>
 
 	<script>
-		function displayProperties(object) {
-			var counter_functions = 0;
-			var counter_variates = 0;
-			var functions = "";
-			var variates = "";
-			for(var property in object) {
-				if(typeof object[property] === "function") {
-					functions += property + "<br>";
-					++counter_functions;
-				}
-				else {
-					variates += property + "<br>";
-					++counter_variates;	
-				}
-			}
-			document.write("共有" + (counter_functions + counter_variates) + "个属性" + "<br>");
-			document.write("<br>类变量有" + counter_variates + "个：" + "<br>" + variates);
-			document.write("<br>类方法有" + counter_functions + "个：" + "<br>" + functions);
-		}
-	</script>
-	<script>
-		var time_count_end = +new Date();
-		document.write("<br><br><br>" + "总共用时：" +  (time_count_end - time_count_start) + "毫秒");
+		var canvas = document.querySelector("canvas");
+		var context = canvas.getContext("2d");
+
+		
+
+		//绘制外圆
+		context.beginPath();
+		context.strokeStyle = "rgba(0, 0, 255, 0.5)";
+		context.lineWidth = 2;
+		context.arc(150, 150, 145, 0, Math.PI*2, true);
+		//绘制内圆
+		context.moveTo(300-5-5, 300*0.5);
+		context.arc(150, 150, 140, 0, Math.PI*2, true);
+		context.stroke();
+		
+		//绘制时针
+		context.beginPath();
+		context.lineWidth = 5;
+		context.moveTo(150, 150);
+		context.lineTo(150-90, 150);
+		//绘制分针
+		context.moveTo(150, 150);
+		context.lineTo(150, 20);
+		context.stroke();
+
+		//绘制文字
+		context.font = "20px bold";
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText("12", 150, 20);
 	</script>
 </body>
 </html>
