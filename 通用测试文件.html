@@ -29,7 +29,7 @@
 
 		//绘制外圆
 		context.beginPath();
-		context.strokeStyle = "rgba(0, 0, 255, 0.5)";
+		context.strokeStyle = "blue";
 		context.lineWidth = 2;
 		context.arc(150, 150, 145, 0, Math.PI*2, true);
 		//绘制内圆
@@ -47,6 +47,7 @@
 		context.lineTo(150, 30);
 		context.stroke();
 		//绘制秒针
+		context.beginPath();
 		context.lineWidth = 1;
 		context.strokeStyle = "red";
 		context.moveTo(150, 150);
