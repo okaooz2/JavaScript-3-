@@ -44,7 +44,13 @@
 		context.lineTo(150-90, 150);
 		//绘制分针
 		context.moveTo(150, 150);
-		context.lineTo(150, 20);
+		context.lineTo(150, 30);
+		context.stroke();
+		//绘制秒针
+		context.lineWidth = 1;
+		context.strokeStyle = "red";
+		context.moveTo(150, 150);
+		context.lineTo(150, 300-20);
 		context.stroke();
 
 		//绘制文字
@@ -52,6 +58,9 @@
 		context.textAlign = "center";
 		context.textBaseline = "middle";
 		context.fillText("12", 150, 20);
+		context.fillText("3", 300-20, 150);
+		context.fillText("6", 150, 300-20);
+		context.fillText("9", 20, 150);
 	</script>
 </body>
 </html>
