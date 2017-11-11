@@ -39,11 +39,6 @@ function makeClock() {
             this.context.lineWidth = 15;
             this.context.arc(0, 0, 140, 0, 2*Math.PI, true);
             this.context.stroke();
-            //表盘中间的点
-            this.context.beginPath();
-            this.context.fillStyle = "blue";
-            this.context.arc(0, 0, 10, 0, 2*Math.PI, true);
-            this.context.fill();
             //在画刻度(60个刻度)
             this.context.save();
             for(var i=0; i<60; ++i) {
@@ -52,7 +47,7 @@ function makeClock() {
                     this.context.fillStyle = "black";
                 }
                 else {
-                    this.context.fillStyle = "#ccc";
+                    this.context.fillStyle = "#C0C0C0";
                 }
                 this.context.arc(-125, 0, 3, 0, 2*Math.PI, true);
                 this.context.fill();
@@ -86,11 +81,19 @@ function makeClock() {
             this.context.moveTo(-20*Math.cos(hours*Math.PI/6), -20*Math.sin(hours*Math.PI/6)); //Math.PI/6 = 2π/12
             this.context.lineTo(70*Math.cos(hours*Math.PI/6), 70*Math.sin(hours*Math.PI/6));
             this.context.stroke();
+            //在时针顶端绘制一线条增加美感
+            this.context.beginPath();
+            this.context.strokeStyle = "white";
+            this.context.lineWidth = 3;
+            this.context.moveTo(30*Math.cos(hours*Math.PI/6), 30*Math.sin(hours*Math.PI/6)); //Math.PI/6 = 2π/12
+            this.context.lineTo(65*Math.cos(hours*Math.PI/6), 65*Math.sin(hours*Math.PI/6));
+            this.context.stroke();
         },
         //画分针的方法--->无返回值
         drawMinute: function() {
-            this.context.strokeStyle = "black";
-            this.context.lineWidth = 5;
+            this.context.beginPath();
+            this.context.strokeStyle = "#ADFF2F";
+            this.context.lineWidth = 6;
             this.context.lineCap = "round";
             this.context.moveTo(-20*Math.cos(this.minute*Math.PI/30), -20*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
             this.context.lineTo(100*Math.cos(this.minute*Math.PI/30), 100*Math.sin(this.minute*Math.PI/30));
@@ -99,7 +102,7 @@ function makeClock() {
         //画秒针的方法--->无返回值
         drawSecond: function() {
             this.context.beginPath();
-            this.context.fillStyle = "red";
+            this.context.fillStyle = "#FF4500";
             this.context.moveTo(-40*Math.cos(this.second*Math.PI/30 - 0.08), -40*Math.sin(this.second*Math.PI/30 - 0.08));   //Math.PI/30 = 2π/60
             this.context.lineTo(-40*Math.cos(this.second*Math.PI/30 + 0.08), -40*Math.sin(this.second*Math.PI/30 + 0.08));
             this.context.lineTo(120*Math.cos(this.second*Math.PI/30 - 0.01), 120*Math.sin(this.second*Math.PI/30 - 0.01)); 
@@ -119,6 +122,11 @@ function makeClock() {
                 that.drawHour();
                 that.drawMinute();
                 that.drawSecond();
+                //表盘中间的点
+                that.context.beginPath();
+                that.context.fillStyle = "#800000";
+                that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
+                that.context.fill();
 
                 if(++that.second === 60) {
                     that.second = 0;
