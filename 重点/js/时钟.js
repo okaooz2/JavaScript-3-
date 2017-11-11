@@ -92,7 +92,7 @@ function makeClock() {
         //画分针的方法--->无返回值
         drawMinute: function() {
             this.context.beginPath();
-            this.context.strokeStyle = "#ADFF2F";
+            this.context.strokeStyle = "#FFD700";
             this.context.lineWidth = 6;
             this.context.lineCap = "round";
             this.context.moveTo(-20*Math.cos(this.minute*Math.PI/30), -20*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
