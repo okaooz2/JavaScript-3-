@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>时钟</title>
+</head>
+<body>
+    <div class="clock-frame"></div>
+
+
+
+    <script src="./js/时钟.js"></script>
+    <script>
+        var clock_frame = document.querySelector("div.clock-frame");
+        var clock =  makeClock();
+        clock_frame.appendChild(clock);
+    </script>
+</body>
+</html>

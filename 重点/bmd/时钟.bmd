@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<map name="时钟" document_type="Blumind" editor_version="1.3.16.0">
+  <!--Create by Blumind, you can download it free from http://www.blumind.org/download-->
+  <info />
+  <layout>LOGIC_RIGHT</layout>
+  <attributes>
+    <item name="editor_show_sidebar">True</item>
+  </attributes>
+  <style>
+    <back_color>White</back_color>
+    <fore_color>Black</fore_color>
+    <line_color>LightSlateGray</line_color>
+    <border_color>SlateGray</border_color>
+    <node_back_color>LightGray</node_back_color>
+    <node_fore_color>Black</node_fore_color>
+    <select_color>RoyalBlue</select_color>
+    <hover_color>MediumSlateBlue</hover_color>
+    <link_line_color>Green</link_line_color>
+  </style>
+  <nodes>
+    <node text="时钟对象">
+      <style>
+        <back_color>Silver</back_color>
+        <fore_color>Black</fore_color>
+        <border_color>Black</border_color>
+        <padding>12</padding>
+      </style>
+      <widgets>
+        <widget type="NOTES" align="Right" hyperlink="">
+          <description>目标效果：
+    1. 把时钟对象放在函数内，该函数返回一个canvas画布元素，该元素现实一个动态时钟</description>
+        </widget>
+      </widgets>
+      <nodes>
+        <node text="属性">
+          <style>
+            <fore_color>Red</fore_color>
+            <shape>3</shape>
+          </style>
+          <nodes>
+            <node text="时（浮点数）">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="分">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="秒">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="canvas画布元素">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="context画布上下文">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="绘制好的表盘">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+              <nodes>
+                <node text="表盘不变，存起来可以即用">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
+            </node>
+          </nodes>
+        </node>
+        <node text="方法">
+          <style>
+            <fore_color>Red</fore_color>
+            <shape>3</shape>
+          </style>
+          <nodes>
+            <node text="读取（系统）时间，并初始化属性">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="初始化表盘">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="画时针的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="画分针的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="画秒针的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+            <node text="控制全局流程的方法">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
+          </nodes>
+        </node>
+      </nodes>
+    </node>
+  </nodes>
+</map>
