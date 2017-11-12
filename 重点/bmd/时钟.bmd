@@ -109,6 +109,11 @@
                 <back_color>Red</back_color>
               </style>
             </node>
+            <node text="画电子表盘">
+              <style>
+                <back_color>Red</back_color>
+              </style>
+            </node>
             <node text="控制全局流程的方法">
               <style>
                 <back_color>Red</back_color>

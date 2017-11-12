@@ -17,10 +17,12 @@ function makeClock() {
         initialProperty: function() {
             var time = new Date();
             //初始化时间
-            this.hour = time.getHours();
-            this.minute = time.getMinutes();
-            this.second = time.getSeconds();
-            (this.hour > 12) ? (this.hour -= 12) : (null);
+            // this.hour = time.getHours();
+            // this.minute = time.getMinutes();
+            // this.second = time.getSeconds();
+            this.hour = 5;
+            this.minute = 23;
+            this.second = 17;
             //创建画板，并初始化上下文
             if(this.canvas === null) {
                 this.canvas = document.createElement("canvas");
@@ -57,7 +59,7 @@ function makeClock() {
             //画12个数字
             this.context.save();
             this.context.rotate(Math.PI*0.5);        //为了字体方向正确，要把坐标轴该回默认状态
-            this.context.font = "bold 20px 微软雅黑";
+            this.context.font = "bold 20px lets_go_digitalregular";
             this.context.textAlign = "center";
             this.context.textBaseline = "middle";
             this.context.fillStyle = "blue";
@@ -68,14 +70,18 @@ function makeClock() {
                 this.context.fillText(text, 109*Math.cos(i*Math.PI/6), 109*Math.sin(i*Math.PI/6));
             }
             this.context.restore();
-            // this.panel = this.canvas.toDataURL("image/png");
+            //画电子显示器框
+            this.context.beginPath();
+            this.context.fillStyle = "#ddd";
+            this.context.fillRect(-75, -65, 40, 130);
+
             this.panel = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
         },
         //画时针的方法--->无返回值
         drawHour: function() {
             var hours = this.hour + this.minute/60;
             this.context.beginPath();
-            this.context.strokeStyle = "black";
+            this.context.strokeStyle = "rgba(0,0,0,0.6 )";
             this.context.lineWidth = 10;
             this.context.lineCap = "round";
             this.context.moveTo(-20*Math.cos(hours*Math.PI/6), -20*Math.sin(hours*Math.PI/6)); //Math.PI/6 = 2π/12
@@ -92,7 +98,7 @@ function makeClock() {
         //画分针的方法--->无返回值
         drawMinute: function() {
             this.context.beginPath();
-            this.context.strokeStyle = "#FFD700";
+            this.context.strokeStyle = "rgba(255,215,0,0.85)";
             this.context.lineWidth = 6;
             this.context.lineCap = "round";
             this.context.moveTo(-30*Math.cos(this.minute*Math.PI/30), -30*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
@@ -102,12 +108,28 @@ function makeClock() {
         //画秒针的方法--->无返回值
         drawSecond: function() {
             this.context.beginPath();
-            this.context.fillStyle = "#FF4500";
+            this.context.fillStyle = "rgba(128,0,0,0.55)";
             this.context.moveTo(-40*Math.cos(this.second*Math.PI/30 - 0.08), -40*Math.sin(this.second*Math.PI/30 - 0.08));   //Math.PI/30 = 2π/60
             this.context.lineTo(-40*Math.cos(this.second*Math.PI/30 + 0.08), -40*Math.sin(this.second*Math.PI/30 + 0.08));
             this.context.lineTo(120*Math.cos(this.second*Math.PI/30 - 0.01), 120*Math.sin(this.second*Math.PI/30 - 0.01)); 
             this.context.lineTo(120*Math.cos(this.second*Math.PI/30 + 0.01), 120*Math.sin(this.second*Math.PI/30 + 0.01));
             this.context.fill();
+        },
+        //画电子表--->无返回值
+        drawDigitalClock: function() {
+            this.context.save();
+            this.context.rotate(Math.PI*0.5);
+            this.context.beginPath();
+            //时，分
+            this.context.font = "40px digital_dismayregular";
+            this.context.textAlign = "center";
+            this.context.textBaseline = "middle";
+            this.context.fillStyle = "red";
+            this.context.fillText("" + (this.hour<12 ? 0 : "") + this.hour + ":" + this.minute, -13, 56);
+            //秒
+            this.context.font = "25px digital_dismayregular";
+            this.context.fillText(this.second, 48, 58);
+            this.context.restore();
         },
         //控制全局流程的方法--->无返回值
         globalProgress: function() {
@@ -119,12 +141,13 @@ function makeClock() {
             function _globalProgress() {
                 that.context.clearRect(-150, -150, that.canvas.width, that.canvas.height);
                 that.context.putImageData(that.panel, 0, 0);
+                that.drawDigitalClock();
                 that.drawHour();
                 that.drawMinute();
                 that.drawSecond();
                 //表盘中间的点
                 that.context.beginPath();
-                that.context.fillStyle = "blue";
+                that.context.fillStyle = "red";
                 that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
                 that.context.fill();
 
