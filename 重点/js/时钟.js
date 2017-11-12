@@ -154,7 +154,6 @@ function makeClock() {
             document.addEventListener("visibilitychange", function(event) {
                 if(!document.hidden) {
                     that.initialProperty();
-                    console.log(666);
                 }
             }, false);
             
