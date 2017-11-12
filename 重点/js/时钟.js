@@ -168,7 +168,7 @@ function makeClock() {
     //延时函数，延时1s（在chrome浏览器下电子表内部文字有延时加载的情况，为了避免文字变化带来的视觉影响而写此函数）
     (function() {
         var second = new Date().getTime();
-        var next_second = second + 1000;
+        var next_second = second + 5000;
         while(next_second > second) {
             second = new Date().getTime();
         }
