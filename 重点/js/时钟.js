@@ -145,7 +145,7 @@ function makeClock() {
                 that.drawSecond();
                 //表盘中间的点
                 that.context.beginPath();
-                that.context.fillStyle = "blue";
+                that.context.fillStyle = "red";
                 that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
                 that.context.fill();
 
@@ -165,10 +165,10 @@ function makeClock() {
     /************************************************************************************************/
     clock.globalProgress();
 
-    //延时函数，延时1s（在chrome浏览器下电子表内部文字有延时加载的情况，为了避免文字变化带来的视觉影响而写此函数）
+    //延时函数，延时1s（在chrome浏览器下电子表内部文字有延时加载的情况，为了避免文字变化带来的视觉影响而写此函数，然而我的手机还是那样，即使延时了5秒。。。）
     (function() {
         var second = new Date().getTime();
-        var next_second = second + 5000;
+        var next_second = second + 1000;
         while(next_second > second) {
             second = new Date().getTime();
         }
