@@ -145,7 +145,7 @@ function makeClock() {
                 that.drawSecond();
                 //表盘中间的点
                 that.context.beginPath();
-                that.context.fillStyle = "red";
+                that.context.fillStyle = "blue";
                 that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
                 that.context.fill();
 
