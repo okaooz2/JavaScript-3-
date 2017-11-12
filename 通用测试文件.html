@@ -18,50 +18,19 @@
 	</style>
 </head>
 <body>
-	<canvas width="300" height="300">你的浏览器不支持canvas画布功能！</canvas>
+	<p>此页面没有内容</p>
+	
 
 
 	<script>
-		var canvas = document.querySelector("canvas");
-		var context = canvas.getContext("2d");
-
-		
-
-		//绘制外圆
-		context.beginPath();
-		context.strokeStyle = "blue";
-		context.lineWidth = 2;
-		context.arc(150, 150, 145, 0, Math.PI*2, true);
-		//绘制内圆
-		context.moveTo(300-5-5, 300*0.5);
-		context.arc(150, 150, 140, 0, Math.PI*2, true);
-		context.stroke();
-		
-		//绘制时针
-		context.beginPath();
-		context.lineWidth = 5;
-		context.moveTo(150, 150);
-		context.lineTo(150-90, 150);
-		//绘制分针
-		context.moveTo(150, 150);
-		context.lineTo(150, 30);
-		context.stroke();
-		//绘制秒针
-		context.beginPath();
-		context.lineWidth = 1;
-		context.strokeStyle = "red";
-		context.moveTo(150, 150);
-		context.lineTo(150, 300-20);
-		context.stroke();
-
-		//绘制文字
-		context.font = "20px bold";
-		context.textAlign = "center";
-		context.textBaseline = "middle";
-		context.fillText("12", 150, 20);
-		context.fillText("3", 300-20, 150);
-		context.fillText("6", 150, 300-20);
-		context.fillText("9", 20, 150);
+		document.addEventListener("visibilitychange", function(event) {
+			if(document.hidden) {
+				console.log("现在页面不可见");
+			}
+			else {
+				console.log("现在页面可见");
+			}
+		}, false);
 	</script>
 </body>
 </html>

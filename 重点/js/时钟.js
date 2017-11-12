@@ -79,12 +79,20 @@ function makeClock() {
         drawHour: function() {
             var hours = this.hour + this.minute/60;
             this.context.beginPath();
-            this.context.strokeStyle = "rgba(0,0,0,0.6 )";
-            this.context.lineWidth = 10;
+            this.context.strokeStyle = "rgba(47,79,79,0.7)";
+            this.context.lineWidth = 11;
             this.context.lineCap = "round";
             this.context.moveTo(-20*Math.cos(hours*Math.PI/6), -20*Math.sin(hours*Math.PI/6)); //Math.PI/6 = 2π/12
-            this.context.lineTo(70*Math.cos(hours*Math.PI/6), 70*Math.sin(hours*Math.PI/6));
+            this.context.lineTo(65*Math.cos(hours*Math.PI/6), 65*Math.sin(hours*Math.PI/6));
             this.context.stroke();
+            //画时针箭头
+            this.context.beginPath();
+            this.context.fillStyle = "rgba(47,79,79,0.7)";
+            this.context.moveTo(80*Math.cos(hours*Math.PI/6), 80*Math.sin(hours*Math.PI/6)); //Math.PI/6 = 2π/12
+            this.context.lineTo(60*Math.cos(hours*Math.PI/6 + 0.3), 60*Math.sin(hours*Math.PI/6 + 0.3));
+            this.context.lineTo(65*Math.cos(hours*Math.PI/6), 65*Math.sin(hours*Math.PI/6));
+            this.context.lineTo(60*Math.cos(hours*Math.PI/6 - 0.3), 60*Math.sin(hours*Math.PI/6 - 0.3));
+            this.context.fill();
             //在时针顶端绘制一线条增加美感
             this.context.beginPath();
             this.context.strokeStyle = "white";
@@ -97,11 +105,19 @@ function makeClock() {
         drawMinute: function() {
             this.context.beginPath();
             this.context.strokeStyle = "rgba(255,215,0,0.85)";
-            this.context.lineWidth = 6;
+            this.context.lineWidth = 8;
             this.context.lineCap = "round";
             this.context.moveTo(-30*Math.cos(this.minute*Math.PI/30), -30*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
-            this.context.lineTo(100*Math.cos(this.minute*Math.PI/30), 100*Math.sin(this.minute*Math.PI/30));
+            this.context.lineTo(90*Math.cos(this.minute*Math.PI/30), 90*Math.sin(this.minute*Math.PI/30));
             this.context.stroke();
+            //画分针箭头
+            this.context.beginPath();
+            this.context.fillStyle = "rgba(255,215,0,0.85)";
+            this.context.moveTo(105*Math.cos(this.minute*Math.PI/30), 105*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
+            this.context.lineTo(70*Math.cos(this.minute*Math.PI/30 + 0.25), 70*Math.sin(this.minute*Math.PI/30 + 0.25));
+            this.context.lineTo(85*Math.cos(this.minute*Math.PI/30), 85*Math.sin(this.minute*Math.PI/30));
+            this.context.lineTo(70*Math.cos(this.minute*Math.PI/30 - 0.25), 70*Math.sin(this.minute*Math.PI/30 -0.25));
+            this.context.fill();
         },
         //画秒针的方法--->无返回值
         drawSecond: function() {
@@ -133,8 +149,15 @@ function makeClock() {
         globalProgress: function() {
             this.initialProperty();
             this.initiaoPanel();
-
             var that = this;
+            //当切换页面再切换回来时，更新时间。因为在切换其他页面的过程中页面执行可能暂停了。
+            document.addEventListener("visibilitychange", function(event) {
+                if(!document.hidden) {
+                    that.initialProperty();
+                    console.log(666);
+                }
+            }, false);
+            
             _globalProgress();
             function _globalProgress() {
                 that.context.clearRect(-150, -150, that.canvas.width, that.canvas.height);
@@ -146,9 +169,9 @@ function makeClock() {
                 //表盘中间的点
                 that.context.beginPath();
                 that.context.fillStyle = "red";
-                that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
+                that.context.arc(0, 0, 8, 0, 2*Math.PI, true);
                 that.context.fill();
-
+                //自动走秒，不用时刻读取系统时间
                 if(++that.second === 60) {
                     that.second = 0;
                     if(++that.minute === 60) {

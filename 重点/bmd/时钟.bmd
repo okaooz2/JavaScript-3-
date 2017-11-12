@@ -118,6 +118,14 @@
               <style>
                 <back_color>Red</back_color>
               </style>
+              <nodes>
+                <node text="页面切换回来后要能自动更新时间">
+                  <style>
+                    <fore_color>Red</fore_color>
+                    <shape>3</shape>
+                  </style>
+                </node>
+              </nodes>
             </node>
           </nodes>
         </node>
