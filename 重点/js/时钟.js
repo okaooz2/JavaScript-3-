@@ -95,7 +95,7 @@ function makeClock() {
             this.context.strokeStyle = "#FFD700";
             this.context.lineWidth = 6;
             this.context.lineCap = "round";
-            this.context.moveTo(-20*Math.cos(this.minute*Math.PI/30), -20*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
+            this.context.moveTo(-30*Math.cos(this.minute*Math.PI/30), -30*Math.sin(this.minute*Math.PI/30));   //Math.PI/30 = 2π/60
             this.context.lineTo(100*Math.cos(this.minute*Math.PI/30), 100*Math.sin(this.minute*Math.PI/30));
             this.context.stroke();
         },
@@ -124,14 +124,14 @@ function makeClock() {
                 that.drawSecond();
                 //表盘中间的点
                 that.context.beginPath();
-                that.context.fillStyle = "#800000";
+                that.context.fillStyle = "blue";
                 that.context.arc(0, 0, 6, 0, 2*Math.PI, true);
                 that.context.fill();
 
                 if(++that.second === 60) {
                     that.second = 0;
                     if(++that.minute === 60) {
-                        that.initialProperty();      //最长间隔一小时更新一次时间
+                        that.initialProperty();      //每整点更新一次时间
                     }
                 }
                 
