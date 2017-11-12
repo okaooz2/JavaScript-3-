@@ -18,12 +18,9 @@ function makeClock() {
         initialProperty: function() {
             var time = new Date();
             //初始化时间
-            // this.hour = time.getHours();
-            // this.minute = time.getMinutes();
-            // this.second = time.getSeconds();
-            this.hour = 5;
-            this.minute = 23;
-            this.second = 17;
+            this.hour = time.getHours();
+            this.minute = time.getMinutes();
+            this.second = time.getSeconds();
             //创建画板，并初始化上下文
             if(this.canvas === null) {
                 this.canvas = document.createElement("canvas");
@@ -109,7 +106,7 @@ function makeClock() {
         //画秒针的方法--->无返回值
         drawSecond: function() {
             this.context.beginPath();
-            this.context.fillStyle = "rgba(128,0,0,0.55)";
+            this.context.fillStyle = "rgba(220,20,60,0.65)";
             this.context.moveTo(-40*Math.cos(this.second*Math.PI/30 - 0.08), -40*Math.sin(this.second*Math.PI/30 - 0.08));   //Math.PI/30 = 2π/60
             this.context.lineTo(-40*Math.cos(this.second*Math.PI/30 + 0.08), -40*Math.sin(this.second*Math.PI/30 + 0.08));
             this.context.lineTo(120*Math.cos(this.second*Math.PI/30 - 0.01), 120*Math.sin(this.second*Math.PI/30 - 0.01)); 
@@ -125,11 +122,11 @@ function makeClock() {
             this.context.font = "40px digital_dismayregular";
             this.context.textAlign = "center";
             this.context.textBaseline = "middle";
-            this.context.fillStyle = "red";
-            this.context.fillText("" + (this.hour<12 ? 0 : "") + this.hour + ":" + this.minute, -13, 56);
+            this.context.fillStyle = "#A52A2A";
+            this.context.fillText("" + (this.hour<10 ? 0 : "") + this.hour + ":" + (this.minute<10 ? 0 : "") + this.minute, -13, 56);
             //秒
             this.context.font = "25px digital_dismayregular";
-            this.context.fillText(this.second, 48, 58);
+            this.context.fillText("" + (this.second<10 ? 0 : "") + this.second, 48, 59);
             this.context.restore();
         },
         //控制全局流程的方法--->无返回值
@@ -167,6 +164,15 @@ function makeClock() {
 
     /************************************************************************************************/
     clock.globalProgress();
+
+    //延时函数，延时1s（在chrome浏览器下电子表内部文字有延时加载的情况，为了避免文字变化带来的视觉影响而写此函数）
+    (function() {
+        var second = new Date().getTime();
+        var next_second = second + 1000;
+        while(next_second > second) {
+            second = new Date().getTime();
+        }
+    })();
 
     return clock.canvas;
 }
