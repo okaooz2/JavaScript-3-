@@ -12,7 +12,6 @@ function makeClock() {
         second: 0,
         canvas: null,
         context: null,
-        panel: null,    //存放面板图像
 
         //读取（系统）时间，并初始化属性--->无返回值
         initialProperty: function() {
@@ -72,8 +71,9 @@ function makeClock() {
             this.context.beginPath();
             this.context.fillStyle = "#ddd";
             this.context.fillRect(-75, -65, 40, 130);
-
-            this.panel = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            //把表盘作为背景
+            var panel = this.canvas.toDataURL("image/png");
+            this.canvas.style.background = "url(" + panel + ")";
         },
         //画时针的方法--->无返回值
         drawHour: function() {
@@ -160,7 +160,6 @@ function makeClock() {
             _globalProgress();
             function _globalProgress() {
                 that.context.clearRect(-150, -150, that.canvas.width, that.canvas.height);
-                that.context.putImageData(that.panel, 0, 0);
                 that.drawDigitalClock();
                 that.drawHour();
                 that.drawMinute();
