@@ -18,19 +18,17 @@
 	</style>
 </head>
 <body>
-	<p>此页面没有内容</p>
+	<!-- <iframe src="./重点/时钟.html" id="my-frame" frameborder="0" width="350" height="350"></iframe> -->
+	<!-- <img src="./image/jpg_1.jpg" alt="jpg_1"> -->
+	<video src="./video/minions.mp4" poster="./image/jpg_2.jpg" controls></video>
+	<audio src="./music/一生所爱.mp3" controls></audio>
 	
 
 
 	<script>
-		document.addEventListener("visibilitychange", function(event) {
-			if(document.hidden) {
-				console.log("现在页面不可见");
-			}
-			else {
-				console.log("现在页面可见");
-			}
-		}, false);
+		var video = document.querySelector("video");
+		video.playbackRate = 2;
+		video.start = 10;
 	</script>
 </body>
 </html>
