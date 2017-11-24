@@ -18,17 +18,36 @@
 	</style>
 </head>
 <body>
-	<!-- <iframe src="./重点/时钟.html" id="my-frame" frameborder="0" width="350" height="350"></iframe> -->
-	<!-- <img src="./image/jpg_1.jpg" alt="jpg_1"> -->
-	<video src="./video/minions.mp4" poster="./image/jpg_2.jpg" controls></video>
-	<audio src="./music/一生所爱.mp3" controls></audio>
-	
+	<button>nihao</button>
+	<button>你好</button>
 
+
+	<script src="./js/EventTarget.js"></script>
 
 	<script>
-		var video = document.querySelector("video");
-		video.playbackRate = 2;
-		video.start = 10;
+		
+		var event_target = new EventTarget();
+
+		function add(object) {
+			console.log(object.add1 + object.add2);
+		}
+		function ddd() {
+			
+		}
+
+		event_target.addHandeler("add", add);
+		event_target.addHandeler("add", add);
+		event_target.addHandeler("add", ddd);
+		event_target.addHandeler("add", ddd);
+		event_target.addHandeler("add", add);
+		event_target.fire({type: "add", 
+							add1: 100, 
+							add2: 250});
+		event_target.removeHandler("add", add);
+		event_target.removeSeriesHandler("add", add);
+		event_target.removeAllHandler("add");
+		console.log(event_target);
+
 	</script>
 </body>
 </html>
