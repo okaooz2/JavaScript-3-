@@ -21,33 +21,47 @@
 	<button>nihao</button>
 	<button>你好</button>
 
+	<div class="dragable" style="height: 50px; width: 50px; background-color: red; position: absolute"></div>
 
-	<script src="./js/EventTarget.js"></script>
 
 	<script>
-		
-		var event_target = new EventTarget();
+		console.log(sessionStorage.length);
+		sessionStorage.setItem("nihao", "hellow");
+		console.log(sessionStorage.length);
 
-		function add(object) {
-			console.log(object.add1 + object.add2);
+		console.log(sessionStorage.getItem("nihao"));
+		console.log(sessionStorage.key(0));
+		console.log(sessionStorage.getItem(sessionStorage.key(0)));
+
+		sessionStorage.removeItem("nihao");
+		console.log(sessionStorage.length);
+		console.log("");
+
+		sessionStorage.setItem("123", "hellow");
+		sessionStorage.setItem("456", "hellow");
+		sessionStorage.setItem("789", "hellow");
+		(function() {
+			for(var i=0, len=sessionStorage.length; i<len; ++i) {
+				var name = sessionStorage.key(i);
+				var value = sessionStorage.getItem(name);
+				console.log(name + " = " + value);
+			}
+		})();
+		console.log("");
+
+		sessionStorage.setItem("789", "nihao");
+		for(var name in sessionStorage) {
+			console.log(name + " = " + sessionStorage.getItem(name));
+			// var value = sessionStorage.getItem(name);
+			// console.log(name + " = " + value);
 		}
-		function ddd() {
-			
-		}
+		console.log("");
 
-		event_target.addHandeler("add", add);
-		event_target.addHandeler("add", add);
-		event_target.addHandeler("add", ddd);
-		event_target.addHandeler("add", ddd);
-		event_target.addHandeler("add", add);
-		event_target.fire({type: "add", 
-							add1: 100, 
-							add2: 250});
-		event_target.removeHandler("add", add);
-		event_target.removeSeriesHandler("add", add);
-		event_target.removeAllHandler("add");
-		console.log(event_target);
+		delete sessionStorage["123"];
 
+		console.log(sessionStorage.length);
+		sessionStorage.clear();
+		console.log(sessionStorage.length);
 	</script>
 </body>
 </html>

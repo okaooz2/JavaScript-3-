@@ -2,11 +2,11 @@
  * 该对象为自定义函数
  * 使用方法例：
  *  var event_target = new EventTarget();
-    event_target.addHandeler("add", add);
-    event_target.addHandeler("add", add);
-    event_target.addHandeler("add", ddd);
-    event_target.addHandeler("add", ddd);
-    event_target.addHandeler("add", add);
+    event_target.addHandler("add", add);
+    event_target.addHandler("add", add);
+    event_target.addHandler("add", ddd);
+    event_target.addHandler("add", ddd);
+    event_target.addHandler("add", add);
     event_target.fire({type: "add", 
                         add1: 100, 
                         add2: 250});
@@ -33,7 +33,7 @@ EventTarget.prototype = {
 
     //为事件新增处理函数
     //添加的函数若需要传入参数，则应以对象的形式传入，详细可看fire函数的执行过程
-    addHandeler: function(event_type, event_handler) {
+    addHandler: function(event_type, event_handler) {
         //若之前没有添加过该事件，则添加该事件
         if(typeof this.handlers[event_type] === "undefined") {
             this.handlers[event_type] = [];
