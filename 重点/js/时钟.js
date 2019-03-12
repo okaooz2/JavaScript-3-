@@ -138,7 +138,7 @@ function makeClock() {
             this.context.font = "40px digital_dismayregular";
             this.context.textAlign = "center";
             this.context.textBaseline = "middle";
-            this.context.fillStyle = "#00008B";
+            this.context.fillStyle = "#ff0000";
             this.context.fillText("" + (this.hour<10 ? 0 : "") + this.hour + ":" + (this.minute<10 ? 0 : "") + this.minute, -13, 56);
             //秒
             this.context.font = "25px digital_dismayregular";
